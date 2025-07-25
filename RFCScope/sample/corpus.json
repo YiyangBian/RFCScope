@@ -1,0 +1,229 @@
+[
+  {
+    "rfc_number": "9619",
+    "rfc_title": "In the DNS, QDCOUNT Is (Usually) One",
+    "content": "1. Introduction\n\n   The DNS protocol [RFC1034] [RFC1035] includes a parameter QDCOUNT in\n   the DNS message header whose value is specified to mean the number of\n   questions in the Question section of a DNS message.\n\n   In a general sense, it seems perfectly plausible for the QDCOUNT\n   parameter, an unsigned 16-bit value, to take a considerable range of\n   values.  However, in the specific case of messages that encode DNS\n   queries and responses (messages with OPCODE = 0), there are other\n   limitations inherent in the protocol that constrain values of QDCOUNT\n   to be either 0 or 1.  In particular, several parameters specified for\n   DNS response messages such as AA and RCODE have no defined meaning\n   when the message contains multiple queries as there is no way to\n   signal which question those parameters relate to.\n\n   In this document, we briefly survey the existing written DNS\n   specification; provide a description of the semantic and practical\n   requirements for DNS queries that naturally constrain the allowable\n   values of QDCOUNT; and update the DNS base specification to clarify\n   the allowable values of the QDCODE parameter in the specific case of\n   DNS messages with OPCODE = 0.\n\n2. Terminology Used in This Document\n\n   The key words \"MUST\", \"MUST NOT\", \"REQUIRED\", \"SHALL\", \"SHALL NOT\",\n   \"SHOULD\", \"SHOULD NOT\", \"RECOMMENDED\", \"NOT RECOMMENDED\", \"MAY\", and\n   \"OPTIONAL\" in this document are to be interpreted as described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all\n   capitals, as shown here.\n\n3. QDCOUNT Is (Usually) One\n\n   A brief summary of the guidance provided in the existing DNS\n   specification ([RFC1035] and many other documents) for the use of\n   QDCOUNT can be found in Appendix A .  While the specification is clear\n   in many cases, there is some ambiguity in the specific case of OPCODE\n   = 0, which this document aims to eliminate.\n\n4. Updates to RFC 1035\n\n   A DNS message with OPCODE = 0 MUST NOT include a QDCOUNT parameter\n   whose value is greater than 1.  It follows that the Question section\n   of a DNS message with OPCODE = 0 MUST NOT contain more than one\n   question.\n\n   A DNS message with OPCODE = 0 and QDCOUNT > 1 MUST be treated as an\n   incorrectly formatted message.  The value of the RCODE parameter in\n   the response message MUST be set to 1 (FORMERR).\n\n   Middleboxes (e.g., firewalls) that process DNS messages in order to\n   eliminate unwanted traffic SHOULD treat messages with OPCODE = 0 and\n   QDCOUNT > 1 as malformed traffic and return a FORMERR response as\n   described above.  Such firewalls MUST NOT treat messages with OPCODE\n   = 0 and QDCOUNT = 0 as malformed.  See Section 4 of [RFC8906] for\n   further guidance.\n\nA. Guidance for the Use of QDCOUNT in the DNS Specification\n\n   The DNS specification [RFC1035] provides some guidance about the\n   values of QDCOUNT that are appropriate in various situations.  A\n   brief summary of this guidance is collated below.\n\nA.1. OPCODE = 0 (QUERY) and 1 (IQUERY)\n\n   [RFC1035] significantly predates the use of the normative requirement\n   key words specified in BCP 14 [RFC2119] [RFC8174], and parts of it\n   are consequently somewhat open to interpretation. Section 4.1.2 (\"Question section format\") of [RFC1035] states the\n   following about QDCOUNT:\n\n      \"The section contains QDCOUNT (usually 1) entries\"\n\n   The only documented exceptions within [RFC1035] relate to the IQuery\n   OpCode, where the request has \"an empty question section\" (QDCOUNT =\n   0), and the response has \"zero, one, or multiple domain names for the\n   specified resource as QNAMEs in the question section\".  The IQuery\n   OpCode was obsoleted by [RFC3425].\n\n   In the absence of clearly expressed normative requirements, we rely\n   on other text in [RFC1035] that makes use of the definite article or\n   that implies a singular question and, by implication, QDCOUNT = 1.\n\n   For example, Section 4.1 of [RFC1035] states the following:\n\n      \"the question for the name server\"\n\n   and\n\n      \"The question section contains fields that describe a question to\n      a name server.\"\n\n   And per Section 4.1.1 (\"Header section format\") of [RFC1035]:\n\n      \"AA: Authoritative Answer - this bit is valid in responses, and\n      specifies that the responding name server is an authority for the\n      domain name in question section.\"\n\n   DNS Cookies (Section 5.4 of [RFC7873]) allow a client to receive a\n   valid Server Cookie without sending a specific question by sending a\n   request (QR = 0) with OPCODE = 0 and QDCOUNT = 0, with the resulting\n   response also containing no question.\n\n   The DNS Zone Transfer Protocol (Section 2.2 of [RFC5936]) allows an\n   authoritative server to optionally send a response message (QR = 1)\n   to a standard Authoritative Transfer (AXFR) query (OPCODE = 0,\n   QTYPE=252) with QDCOUNT = 0 in the second or subsequent message of a\n   multi-message response.\n\n\nA.2. OPCODE = 4 (NOTIFY)\n\n   DNS Notify [RFC1996] also lacks a clearly defined range of values for\n   QDCOUNT.  Section 3.7 states that:\n\n      \"A NOTIFY request has QDCOUNT>0\"\n\n   However, all other text in the RFC discusses the <QNAME, QCLASS,\n   QTYPE> tuple in the singular form.\n\n\nA.3. OPCODE = 5 (UPDATE)\n\n   DNS Update [RFC2136] renames the QDCOUNT field to ZOCOUNT, but the\n   value is constrained to be one by Section 2.3 (\"Zone Section\"):\n\n      \"All records to be updated must be in the same zone, and therefore\n      the Zone Section is allowed to contain exactly one record.\"\n\n\nA.4. OPCODE = 6 (DNS Stateful Operations, DSO)\n\n   DNS Stateful Operations (DSO) (OpCode 6) [RFC8490] preserves\n   compatibility with the standard DNS 12-octet header by requiring all\n   four of the section count values to be set to zero.\n\n\nA.5. Conclusion\n\n   There is no text in [RFC1035] that describes how other parameters in\n   the DNS message, such as AA and RCODE, should be interpreted in the\n   case where a message includes more than one question.  An originator\n   of a query with QDCOUNT > 1 can have no expectations of how it will\n   be processed, and the receiver of a response with QDCOUNT > 1 has no\n   guidance for how it should be interpreted.\n\n   The allowable values of QDCOUNT seem to be clearly specified for\n   OPCODE = 4 (NOTIFY), OPCODE = 5 (UPDATE), and OPCODE = 6 (DNS\n   Stateful Operations, DSO).  OPCODE = 1 (IQUERY) is obsolete and\n   OPCODE = 2 (STATUS) is not specified.  OPCODE = 3 is reserved.\n\n   However, the allowable values of QDCOUNT for OPCODE = 0 (QUERY) are\n   specified in [RFC1035] without the clarity of normative language, and\n   this looseness of language results in some ambiguity.\n\n\n\n",
+    "structured_content": {
+      "1": {
+        "title": "Introduction",
+        "content": "   The DNS protocol [RFC1034] [RFC1035] includes a parameter QDCOUNT in\n   the DNS message header whose value is specified to mean the number of\n   questions in the Question section of a DNS message.\n\n   In a general sense, it seems perfectly plausible for the QDCOUNT\n   parameter, an unsigned 16-bit value, to take a considerable range of\n   values.  However, in the specific case of messages that encode DNS\n   queries and responses (messages with OPCODE = 0), there are other\n   limitations inherent in the protocol that constrain values of QDCOUNT\n   to be either 0 or 1.  In particular, several parameters specified for\n   DNS response messages such as AA and RCODE have no defined meaning\n   when the message contains multiple queries as there is no way to\n   signal which question those parameters relate to.\n\n   In this document, we briefly survey the existing written DNS\n   specification; provide a description of the semantic and practical\n   requirements for DNS queries that naturally constrain the allowable\n   values of QDCOUNT; and update the DNS base specification to clarify\n   the allowable values of the QDCODE parameter in the specific case of\n   DNS messages with OPCODE = 0.",
+        "children": {},
+        "decomposed_content": [
+          {
+            "text": "   The DNS protocol [RFC1034] [RFC1035] includes a parameter QDCOUNT in\n   the DNS message header whose value is specified to mean the number of\n   questions in the Question section of a DNS message.",
+            "references": [],
+            "external_references": []
+          },
+          {
+            "text": "   In a general sense, it seems perfectly plausible for the QDCOUNT\n   parameter, an unsigned 16-bit value, to take a considerable range of\n   values.  However, in the specific case of messages that encode DNS\n   queries and responses (messages with OPCODE = 0), there are other\n   limitations inherent in the protocol that constrain values of QDCOUNT\n   to be either 0 or 1.  In particular, several parameters specified for\n   DNS response messages such as AA and RCODE have no defined meaning\n   when the message contains multiple queries as there is no way to\n   signal which question those parameters relate to.",
+            "references": [],
+            "external_references": []
+          },
+          {
+            "text": "   In this document, we briefly survey the existing written DNS\n   specification; provide a description of the semantic and practical\n   requirements for DNS queries that naturally constrain the allowable\n   values of QDCOUNT; and update the DNS base specification to clarify\n   the allowable values of the QDCODE parameter in the specific case of\n   DNS messages with OPCODE = 0.",
+            "references": [],
+            "external_references": []
+          }
+        ]
+      },
+      "2": {
+        "title": "Terminology Used in This Document",
+        "content": "   The key words \"MUST\", \"MUST NOT\", \"REQUIRED\", \"SHALL\", \"SHALL NOT\",\n   \"SHOULD\", \"SHOULD NOT\", \"RECOMMENDED\", \"NOT RECOMMENDED\", \"MAY\", and\n   \"OPTIONAL\" in this document are to be interpreted as described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all\n   capitals, as shown here.",
+        "children": {},
+        "decomposed_content": [
+          {
+            "text": "   The key words \"MUST\", \"MUST NOT\", \"REQUIRED\", \"SHALL\", \"SHALL NOT\",\n   \"SHOULD\", \"SHOULD NOT\", \"RECOMMENDED\", \"NOT RECOMMENDED\", \"MAY\", and\n   \"OPTIONAL\" in this document are to be interpreted as described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all\n   capitals, as shown here.",
+            "references": [],
+            "external_references": []
+          }
+        ]
+      },
+      "3": {
+        "title": "QDCOUNT Is (Usually) One",
+        "content": "   A brief summary of the guidance provided in the existing DNS\n   specification ([RFC1035] and many other documents) for the use of\n   QDCOUNT can be found in Appendix A .  While the specification is clear\n   in many cases, there is some ambiguity in the specific case of OPCODE\n   = 0, which this document aims to eliminate.",
+        "children": {},
+        "decomposed_content": [
+          {
+            "text": "   A brief summary of the guidance provided in the existing DNS\n   specification ([RFC1035] and many other documents) for the use of\n   QDCOUNT can be found in Appendix A .  While the specification is clear\n   in many cases, there is some ambiguity in the specific case of OPCODE\n   = 0, which this document aims to eliminate.",
+            "references": [
+              {
+                "rfc_number": "RFC1035",
+                "section_id": "1"
+              }
+            ],
+            "external_references": []
+          }
+        ]
+      },
+      "4": {
+        "title": "Updates to RFC 1035",
+        "content": "   A DNS message with OPCODE = 0 MUST NOT include a QDCOUNT parameter\n   whose value is greater than 1.  It follows that the Question section\n   of a DNS message with OPCODE = 0 MUST NOT contain more than one\n   question.\n\n   A DNS message with OPCODE = 0 and QDCOUNT > 1 MUST be treated as an\n   incorrectly formatted message.  The value of the RCODE parameter in\n   the response message MUST be set to 1 (FORMERR).\n\n   Middleboxes (e.g., firewalls) that process DNS messages in order to\n   eliminate unwanted traffic SHOULD treat messages with OPCODE = 0 and\n   QDCOUNT > 1 as malformed traffic and return a FORMERR response as\n   described above.  Such firewalls MUST NOT treat messages with OPCODE\n   = 0 and QDCOUNT = 0 as malformed.  See Section 4 of [RFC8906] for\n   further guidance.",
+        "children": {},
+        "decomposed_content": [
+          {
+            "text": "   A DNS message with OPCODE = 0 MUST NOT include a QDCOUNT parameter\n   whose value is greater than 1.  It follows that the Question section\n   of a DNS message with OPCODE = 0 MUST NOT contain more than one\n   question.",
+            "references": [],
+            "external_references": []
+          },
+          {
+            "text": "   A DNS message with OPCODE = 0 and QDCOUNT > 1 MUST be treated as an\n   incorrectly formatted message.  The value of the RCODE parameter in\n   the response message MUST be set to 1 (FORMERR).",
+            "references": [],
+            "external_references": []
+          },
+          {
+            "text": "   Middleboxes (e.g., firewalls) that process DNS messages in order to\n   eliminate unwanted traffic SHOULD treat messages with OPCODE = 0 and\n   QDCOUNT > 1 as malformed traffic and return a FORMERR response as\n   described above.  Such firewalls MUST NOT treat messages with OPCODE\n   = 0 and QDCOUNT = 0 as malformed.  See Section 4 of [RFC8906] for\n   further guidance.",
+            "references": [
+              {
+                "rfc_number": "RFC9619",
+                "section_id": "4"
+              }
+            ],
+            "external_references": []
+          }
+        ]
+      },
+      "A": {
+        "title": "Guidance for the Use of QDCOUNT in the DNS Specification",
+        "content": "   The DNS specification [RFC1035] provides some guidance about the\n   values of QDCOUNT that are appropriate in various situations.  A\n   brief summary of this guidance is collated below.",
+        "children": {
+          "A.1": {
+            "title": "OPCODE = 0 (QUERY) and 1 (IQUERY)",
+            "content": "   [RFC1035] significantly predates the use of the normative requirement\n   key words specified in BCP 14 [RFC2119] [RFC8174], and parts of it\n   are consequently somewhat open to interpretation. Section 4.1.2 (\"Question section format\") of [RFC1035] states the\n   following about QDCOUNT:\n\n      \"The section contains QDCOUNT (usually 1) entries\"\n\n   The only documented exceptions within [RFC1035] relate to the IQuery\n   OpCode, where the request has \"an empty question section\" (QDCOUNT =\n   0), and the response has \"zero, one, or multiple domain names for the\n   specified resource as QNAMEs in the question section\".  The IQuery\n   OpCode was obsoleted by [RFC3425].\n\n   In the absence of clearly expressed normative requirements, we rely\n   on other text in [RFC1035] that makes use of the definite article or\n   that implies a singular question and, by implication, QDCOUNT = 1.\n\n   For example, Section 4.1 of [RFC1035] states the following:\n\n      \"the question for the name server\"\n\n   and\n\n      \"The question section contains fields that describe a question to\n      a name server.\"\n\n   And per Section 4.1.1 (\"Header section format\") of [RFC1035]:\n\n      \"AA: Authoritative Answer - this bit is valid in responses, and\n      specifies that the responding name server is an authority for the\n      domain name in question section.\"\n\n   DNS Cookies (Section 5.4 of [RFC7873]) allow a client to receive a\n   valid Server Cookie without sending a specific question by sending a\n   request (QR = 0) with OPCODE = 0 and QDCOUNT = 0, with the resulting\n   response also containing no question.\n\n   The DNS Zone Transfer Protocol (Section 2.2 of [RFC5936]) allows an\n   authoritative server to optionally send a response message (QR = 1)\n   to a standard Authoritative Transfer (AXFR) query (OPCODE = 0,\n   QTYPE=252) with QDCOUNT = 0 in the second or subsequent message of a\n   multi-message response.",
+            "children": {},
+            "decomposed_content": [
+              {
+                "text": "   [RFC1035] significantly predates the use of the normative requirement\n   key words specified in BCP 14 [RFC2119] [RFC8174], and parts of it\n   are consequently somewhat open to interpretation. Section 4.1.2 (\"Question section format\") of [RFC1035] states the\n   following about QDCOUNT:\n\n      \"The section contains QDCOUNT (usually 1) entries\"",
+                "references": [
+                  {
+                    "rfc_number": "RFC1035",
+                    "section_id": "4.1.2"
+                  }
+                ],
+                "external_references": []
+              },
+              {
+                "text": "   The only documented exceptions within [RFC1035] relate to the IQuery\n   OpCode, where the request has \"an empty question section\" (QDCOUNT =\n   0), and the response has \"zero, one, or multiple domain names for the\n   specified resource as QNAMEs in the question section\".  The IQuery\n   OpCode was obsoleted by [RFC3425].",
+                "references": [],
+                "external_references": []
+              },
+              {
+                "text": "   In the absence of clearly expressed normative requirements, we rely\n   on other text in [RFC1035] that makes use of the definite article or\n   that implies a singular question and, by implication, QDCOUNT = 1.\n\n   For example, Section 4.1 of [RFC1035] states the following:\n\n      \"the question for the name server\"\n\n   and\n\n      \"The question section contains fields that describe a question to\n      a name server.\"\n\n   And per Section 4.1.1 (\"Header section format\") of [RFC1035]:",
+                "references": [
+                  {
+                    "rfc_number": "RFC1035",
+                    "section_id": "4.1"
+                  },
+                  {
+                    "rfc_number": "RFC1035",
+                    "section_id": "4.1.1"
+                  }
+                ],
+                "external_references": []
+              },
+              {
+                "text": "      \"AA: Authoritative Answer - this bit is valid in responses, and\n      specifies that the responding name server is an authority for the\n      domain name in question section.\"",
+                "references": [],
+                "external_references": []
+              },
+              {
+                "text": "   DNS Cookies (Section 5.4 of [RFC7873]) allow a client to receive a\n   valid Server Cookie without sending a specific question by sending a\n   request (QR = 0) with OPCODE = 0 and QDCOUNT = 0, with the resulting\n   response also containing no question.",
+                "references": [
+                  {
+                    "rfc_number": "RFC7873",
+                    "section_id": "5.4"
+                  }
+                ],
+                "external_references": []
+              },
+              {
+                "text": "   The DNS Zone Transfer Protocol (Section 2.2 of [RFC5936]) allows an\n   authoritative server to optionally send a response message (QR = 1)\n   to a standard Authoritative Transfer (AXFR) query (OPCODE = 0,\n   QTYPE=252) with QDCOUNT = 0 in the second or subsequent message of a\n   multi-message response.",
+                "references": [
+                  {
+                    "rfc_number": "RFC5936",
+                    "section_id": "2.2"
+                  }
+                ],
+                "external_references": []
+              }
+            ]
+          },
+          "A.2": {
+            "title": "OPCODE = 4 (NOTIFY)",
+            "content": "   DNS Notify [RFC1996] also lacks a clearly defined range of values for\n   QDCOUNT.  Section 3.7 states that:\n\n      \"A NOTIFY request has QDCOUNT>0\"\n\n   However, all other text in the RFC discusses the <QNAME, QCLASS,\n   QTYPE> tuple in the singular form.",
+            "children": {},
+            "decomposed_content": [
+              {
+                "text": "   DNS Notify [RFC1996] also lacks a clearly defined range of values for\n   QDCOUNT.  Section 3.7 states that:\n\n      \"A NOTIFY request has QDCOUNT>0\"\n\n   However, all other text in the RFC discusses the <QNAME, QCLASS,\n   QTYPE> tuple in the singular form.",
+                "references": [
+                  {
+                    "rfc_number": "RFC9619",
+                    "section_id": "3"
+                  }
+                ],
+                "external_references": []
+              }
+            ]
+          },
+          "A.3": {
+            "title": "OPCODE = 5 (UPDATE)",
+            "content": "   DNS Update [RFC2136] renames the QDCOUNT field to ZOCOUNT, but the\n   value is constrained to be one by Section 2.3 (\"Zone Section\"):\n\n      \"All records to be updated must be in the same zone, and therefore\n      the Zone Section is allowed to contain exactly one record.\"",
+            "children": {},
+            "decomposed_content": [
+              {
+                "text": "   DNS Update [RFC2136] renames the QDCOUNT field to ZOCOUNT, but the\n   value is constrained to be one by Section 2.3 (\"Zone Section\"):\n\n      \"All records to be updated must be in the same zone, and therefore\n      the Zone Section is allowed to contain exactly one record.\"",
+                "references": [
+                  {
+                    "rfc_number": "RFC9619",
+                    "section_id": "A.3"
+                  }
+                ],
+                "external_references": []
+              }
+            ]
+          },
+          "A.4": {
+            "title": "OPCODE = 6 (DNS Stateful Operations, DSO)",
+            "content": "   DNS Stateful Operations (DSO) (OpCode 6) [RFC8490] preserves\n   compatibility with the standard DNS 12-octet header by requiring all\n   four of the section count values to be set to zero.",
+            "children": {},
+            "decomposed_content": [
+              {
+                "text": "   DNS Stateful Operations (DSO) (OpCode 6) [RFC8490] preserves\n   compatibility with the standard DNS 12-octet header by requiring all\n   four of the section count values to be set to zero.",
+                "references": [],
+                "external_references": []
+              }
+            ]
+          },
+          "A.5": {
+            "title": "Conclusion",
+            "content": "   There is no text in [RFC1035] that describes how other parameters in\n   the DNS message, such as AA and RCODE, should be interpreted in the\n   case where a message includes more than one question.  An originator\n   of a query with QDCOUNT > 1 can have no expectations of how it will\n   be processed, and the receiver of a response with QDCOUNT > 1 has no\n   guidance for how it should be interpreted.\n\n   The allowable values of QDCOUNT seem to be clearly specified for\n   OPCODE = 4 (NOTIFY), OPCODE = 5 (UPDATE), and OPCODE = 6 (DNS\n   Stateful Operations, DSO).  OPCODE = 1 (IQUERY) is obsolete and\n   OPCODE = 2 (STATUS) is not specified.  OPCODE = 3 is reserved.\n\n   However, the allowable values of QDCOUNT for OPCODE = 0 (QUERY) are\n   specified in [RFC1035] without the clarity of normative language, and\n   this looseness of language results in some ambiguity.\n",
+            "children": {},
+            "decomposed_content": [
+              {
+                "text": "   There is no text in [RFC1035] that describes how other parameters in\n   the DNS message, such as AA and RCODE, should be interpreted in the\n   case where a message includes more than one question.  An originator\n   of a query with QDCOUNT > 1 can have no expectations of how it will\n   be processed, and the receiver of a response with QDCOUNT > 1 has no\n   guidance for how it should be interpreted.",
+                "references": [],
+                "external_references": []
+              },
+              {
+                "text": "   The allowable values of QDCOUNT seem to be clearly specified for\n   OPCODE = 4 (NOTIFY), OPCODE = 5 (UPDATE), and OPCODE = 6 (DNS\n   Stateful Operations, DSO).  OPCODE = 1 (IQUERY) is obsolete and\n   OPCODE = 2 (STATUS) is not specified.  OPCODE = 3 is reserved.",
+                "references": [],
+                "external_references": []
+              },
+              {
+                "text": "   However, the allowable values of QDCOUNT for OPCODE = 0 (QUERY) are\n   specified in [RFC1035] without the clarity of normative language, and\n   this looseness of language results in some ambiguity.\n",
+                "references": [],
+                "external_references": []
+              }
+            ]
+          }
+        },
+        "decomposed_content": [
+          {
+            "text": "   The DNS specification [RFC1035] provides some guidance about the\n   values of QDCOUNT that are appropriate in various situations.  A\n   brief summary of this guidance is collated below.",
+            "references": [],
+            "external_references": []
+          }
+        ]
+      }
+    }
+  }
+]
