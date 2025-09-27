@@ -47,8 +47,8 @@
             "text": "   A brief summary of the guidance provided in the existing DNS\n   specification ([RFC1035] and many other documents) for the use of\n   QDCOUNT can be found in Appendix A .  While the specification is clear\n   in many cases, there is some ambiguity in the specific case of OPCODE\n   = 0, which this document aims to eliminate.",
             "references": [
               {
-                "rfc_number": "RFC1035",
-                "section_id": "1"
+                "rfc_number": "RFC9619",
+                "section_id": "A"
               }
             ],
             "external_references": []
@@ -131,6 +131,10 @@
                   {
                     "rfc_number": "RFC7873",
                     "section_id": "5.4"
+                  },
+                  {
+                    "rfc_number": "RFC9619",
+                    "section_id": "A.4"
                   }
                 ],
                 "external_references": []

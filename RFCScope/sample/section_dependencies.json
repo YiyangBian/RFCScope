@@ -5,10 +5,10 @@
       "section_id": "3"
     },
     "document_type": "RFC",
-    "document_tag": "1035",
+    "document_tag": "9619",
     "reference_type": "SECTION",
-    "reference_value": "1",
-    "importance": "normative",
+    "reference_value": "A",
+    "importance": "unknown",
     "updates": false,
     "url": "",
     "reference_text": "",
@@ -69,6 +69,21 @@
     "reference_type": "SECTION",
     "reference_value": "5.4",
     "importance": "informative",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9619",
+      "section_id": "A.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9619",
+    "reference_type": "SECTION",
+    "reference_value": "A.4",
+    "importance": "unknown",
     "updates": false,
     "url": "",
     "reference_text": "",
