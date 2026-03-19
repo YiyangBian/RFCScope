@@ -1,0 +1,11 @@
+{
+  "task": "underspec",
+  "num_requested": 10,
+  "num_completed": 10,
+  "num_errors": 0,
+  "label_counts": {
+    "true_positive": 1,
+    "plausible": 3,
+    "false_positive": 6
+  }
+}

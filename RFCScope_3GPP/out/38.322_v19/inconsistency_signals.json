@@ -1,0 +1,916 @@
+[
+  {
+    "clause_id": "5.2.3.1.1",
+    "title": "General",
+    "clause_type": "procedural",
+    "tags": [
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 5.75,
+    "rule_signals": [
+      "Clause contains both positive and negative mandatory forms.",
+      "Clause mentions both 'discard' and 'deliver'; check whether conditions are fully disambiguated.",
+      "Clause may mix protocol object terminology or roles in a suspicious way.",
+      "Clause links SN semantics to an RLC SDU in a potentially inconsistent way."
+    ],
+    "likely_issue": true,
+    "snippet": "The transmitting side of an AM RLC entity shall prioritize transmission of RLC control PDUs over AMD PDUs. The\ntransmitting side of an AM RLC entity shall prioritize transmission of AMD PDUs containing previously transmitted\nRLC SDUs or RLC SDU segments over transmission of AMD PDUs containing not previously transmitte ..."
+  },
+  {
+    "clause_id": "6.2.2.3",
+    "title": "UMD PDU",
+    "clause_type": "procedural",
+    "tags": [
+      "state_or_timer_dependency",
+      "contains_figure_caption"
+    ],
+    "priority": "medium",
+    "rule_score": 4.5,
+    "rule_signals": [
+      "Clause presents alternatives that may need clearer disambiguation.",
+      "Clause may mix protocol object terminology or roles in a suspicious way.",
+      "Clause links SN semantics to an RLC SDU in a potentially inconsistent way."
+    ],
+    "likely_issue": true,
+    "snippet": "UMD PDU consists of a Data field and an UMD PDU header. The UMD PDU header is byte aligned.\nWhen an UMD PDU contains a complete RLC SDU, the UMD PDU header only contains the SI and R fields.\nAn UM RLC entity is configured by RRC to use either a 6 bit SN or a 12 bit SN. For groupcast and broadcast of NR\nsidelink communi ..."
+  },
+  {
+    "clause_id": "5.3.2",
+    "title": "Retransmission",
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency",
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 4.0,
+    "rule_signals": [
+      "Clause may mix protocol object terminology or roles in a suspicious way.",
+      "Clause links SN semantics to an RLC SDU in a potentially inconsistent way."
+    ],
+    "likely_issue": true,
+    "snippet": "The transmitting side of an AM RLC entity can receive a negative acknowledgement (notification of reception failure\nby its peer AM RLC entity) for an RLC SDU or an RLC SDU segment by the following:\n- STATUS PDU from its peer AM RLC entity.\nWhen receiving a negative acknowledgement for an RLC SDU or an RLC SDU segment b ..."
+  },
+  {
+    "clause_id": "5.3.3.2",
+    "title": "Transmission of a AMD PDU",
+    "clause_type": "procedural",
+    "tags": [
+      "implementation_defined",
+      "cross_clause_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 3.75,
+    "rule_signals": [
+      "Clause mixes mandatory ('shall') and advisory ('should') language.",
+      "Clause mentions both 'start' and 'stop'; check whether conditions are fully disambiguated.",
+      "Clause may mix protocol object terminology or roles in a suspicious way."
+    ],
+    "likely_issue": true,
+    "snippet": "Upon notification of a transmission opportunity by lower layer, for each AMD PDU submitted for transmission such\nthat the AMD PDU contains either a not previously transmitted RLC SDU or an RLC SDU segment containing not\npreviously transmitted byte segment, the transmitting side of an AM RLC entity shall:\n- increment PD ..."
+  },
+  {
+    "clause_id": "4.2.1.2.3",
+    "title": "Receiving UM RLC entity",
+    "clause_type": "procedural",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 2.75,
+    "rule_signals": [
+      "Clause mentions both 'discard' and 'deliver'; check whether conditions are fully disambiguated.",
+      "Clause may mix protocol object terminology or roles in a suspicious way."
+    ],
+    "likely_issue": true,
+    "snippet": "When a receiving UM RLC entity receives UMD PDUs, it shall:\n- detect the loss of RLC SDU segments at lower layers;\n- reassemble RLC SDUs from the received UMD PDUs and deliver the RLC SDUs to upper layer as soon as they\nare available;\n\n- discard received UMD PDUs that cannot be re-assembled into an RLC SDU due to loss ..."
+  },
+  {
+    "clause_id": "4.2.1.3.2",
+    "title": "Transmitting side",
+    "clause_type": "procedural",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 2.0,
+    "rule_signals": [
+      "Clause may mix protocol object terminology or roles in a suspicious way."
+    ],
+    "likely_issue": true,
+    "snippet": "The transmitting side of an AM RLC entity generates AMD PDU(s) for each RLC SDU. When notified of a\ntransmission opportunity by the lower layer, the transmitting AM RLC entity shall segment the RLC SDUs, if needed,\nso that the corresponding AMD PDUs, with RLC headers updated as needed, fit within the total size of RLC ..."
+  },
+  {
+    "clause_id": "5.2.2.1.1",
+    "title": "General",
+    "clause_type": "procedural",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 2.0,
+    "rule_signals": [
+      "Clause may mix protocol object terminology or roles in a suspicious way."
+    ],
+    "likely_issue": true,
+    "snippet": "When submitting a UMD PDU to lower layer, the transmitting UM RLC entity shall:\n- if the UMD PDU contains a segment of an RLC SDU, set the SN of the UMD PDU to TX_Next;\n- if the UMD PDU contains a segment that maps to the last byte of an RLC SDU, then increment TX_Next by\none."
+  },
+  {
+    "clause_id": "4.2.1.2.2",
+    "title": "Transmitting UM RLC entity",
+    "clause_type": "procedural",
+    "tags": [],
+    "priority": "medium",
+    "rule_score": 2.0,
+    "rule_signals": [
+      "Clause may mix protocol object terminology or roles in a suspicious way."
+    ],
+    "likely_issue": true,
+    "snippet": "The transmitting UM RLC entity generates UMD PDU(s) for each RLC SDU. It shall include relevant RLC headers in\nthe UMD PDU. When notified of a transmission opportunity by the lower layer, the transmitting UM RLC entity shall\nsegment the RLC SDUs, if needed, so that the corresponding UMD PDUs, with RLC headers updated a ..."
+  },
+  {
+    "clause_id": "4.2.1.2.1",
+    "title": "General",
+    "clause_type": "architecture_overview",
+    "tags": [
+      "state_or_timer_dependency",
+      "has_bullets",
+      "contains_figure_caption"
+    ],
+    "priority": "low",
+    "rule_score": 2.0,
+    "rule_signals": [
+      "Clause may mix protocol object terminology or roles in a suspicious way."
+    ],
+    "likely_issue": true,
+    "snippet": "An UM RLC entity can be configured to submit/receive RLC PDUs through the following logical channels:\n- DL/UL DTCH, SCCH, STCH, MCCH, and MTCH.\nGenerate RLC header\nand store in\ntransmision buffer\nSegmentation\nModify RLC header\nAdd RLC header\nTransmitting\nUM-RLC\nentity\nUM-RLC\nchannel\nradio interface (Uu/PC5)\nReceiving\nU ..."
+  },
+  {
+    "clause_id": "4.2.1.3.1",
+    "title": "General",
+    "clause_type": "architecture_overview",
+    "tags": [
+      "state_or_timer_dependency",
+      "has_bullets",
+      "contains_figure_caption"
+    ],
+    "priority": "low",
+    "rule_score": 2.0,
+    "rule_signals": [
+      "Clause may mix protocol object terminology or roles in a suspicious way."
+    ],
+    "likely_issue": true,
+    "snippet": "An AM RLC entity can be configured to submit/receive RLC PDUs through the following logical channels:\n- DL/UL DCCH, DL/UL DTCH, SCCH, and STCH.\nGenerate RLC header\nand store in\ntransmission\nbuffer\nSegmentation\nModify RLC header\nAdd RLC header\nRetransmission\nbuffer\nRLC control\nRouting\nReception\nbuffer\nSDU reassembly\nAM- ..."
+  },
+  {
+    "clause_id": "5.2.2.2.1",
+    "title": "General",
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency",
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 1.5,
+    "rule_signals": [
+      "Clause mentions both 'discard' and 'deliver'; check whether conditions are fully disambiguated.",
+      "Clause mentions both 'start' and 'stop'; check whether conditions are fully disambiguated."
+    ],
+    "likely_issue": false,
+    "snippet": "The receiving UM RLC entity shall maintain a reassembly window according to state variable RX_Next_Highest as\nfollows:\n- a SN falls within the reassembly window if (RX_Next_Highest - UM_Window_Size) <= SN\n<RX_Next_Highest;\n- a SN falls outside of the reassembly window otherwise.\nWhen receiving an UMD PDU from lower lay ..."
+  },
+  {
+    "clause_id": "5.2.2.2.3",
+    "title": "Actions when an UMD PDU is placed in the reception buffer",
+    "clause_type": "procedural",
+    "tags": [
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 1.5,
+    "rule_signals": [
+      "Clause mentions both 'discard' and 'deliver'; check whether conditions are fully disambiguated.",
+      "Clause mentions both 'start' and 'stop'; check whether conditions are fully disambiguated."
+    ],
+    "likely_issue": false,
+    "snippet": "When an UMD PDU with SN = x is placed in the reception buffer, the receiving UM RLC entity shall:\n- if all byte segments with SN = x are received:\n- reassemble the RLC SDU from all byte segments with SN = x, remove RLC headers and deliver the\nreassembled RLC SDU to upper layer;\n- if x = RX_Next_Reassembly:\n- update RX_ ..."
+  },
+  {
+    "clause_id": "5.2.3.2.1",
+    "title": "General",
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency",
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 1.5,
+    "rule_signals": [
+      "Clause mentions both 'discard' and 'deliver'; check whether conditions are fully disambiguated.",
+      "Clause mentions both 'start' and 'stop'; check whether conditions are fully disambiguated."
+    ],
+    "likely_issue": false,
+    "snippet": "The receiving side of an AM RLC entity shall maintain a receiving window according to the state variable RX_Next as\nfollows:\n- a SN falls within the receiving window if RX_Next <= SN < RX_Next + AM_Window_Size;\n- a SN falls outside of the receiving window otherwise.\n\nWhen receiving an AMD PDU from lower layer, the rece ..."
+  },
+  {
+    "clause_id": "5.2.3.2.3",
+    "title": "Actions when an AMD PDU is placed in the reception buffer",
+    "clause_type": "procedural",
+    "tags": [
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 1.5,
+    "rule_signals": [
+      "Clause mentions both 'discard' and 'deliver'; check whether conditions are fully disambiguated.",
+      "Clause mentions both 'start' and 'stop'; check whether conditions are fully disambiguated."
+    ],
+    "likely_issue": false,
+    "snippet": "When an AMD PDU with SN = x is placed in the reception buffer, the receiving side of an AM RLC entity shall:\n- if x >= RX_Next_Highest:\n- update RX_Next_Highest to x+ 1.\n- if all bytes of the RLC SDU with SN = x are received:\n- reassemble the RLC SDU from AMD PDU(s) with SN = x, remove RLC headers when doing so and del ..."
+  },
+  {
+    "clause_id": "5.3.3.3",
+    "title": "Reception of a STATUS report",
+    "clause_type": "procedural",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 1.5,
+    "rule_signals": [
+      "Clause mixes mandatory ('shall') and optional ('may') language."
+    ],
+    "likely_issue": false,
+    "snippet": "Upon reception of a STATUS report from the receiving RLC AM entity the transmitting side of an AM RLC entity\nshall:\n- if the STATUS report comprises a positive or negative acknowledgement for the RLC SDU with sequence\nnumber equal to POLL_SN:\n- if t-PollRetransmit is running:\n- stop and reset t-PollRetransmit .\nNOTE: W ..."
+  },
+  {
+    "clause_id": "5.4",
+    "title": "SDU discard procedures",
+    "clause_type": "procedural",
+    "tags": [],
+    "priority": "medium",
+    "rule_score": 1.0,
+    "rule_signals": [
+      "Clause contains both positive and negative mandatory forms."
+    ],
+    "likely_issue": false,
+    "snippet": "When indicated from upper layer (e.g. PDCP) to discard a particular RLC SDU, the transmitting side of an AM RLC\nentity or the transmitting UM RLC entity shall discard the indicated RLC SDU, if neither the RLC SDU nor a segment\nthereof has been submitted to the lower layers. The transmitting side of an AM RLC entity sha ..."
+  },
+  {
+    "clause_id": "7.3",
+    "title": "Timers",
+    "clause_type": "supporting_semantics",
+    "tags": [
+      "cross_clause_dependency",
+      "state_or_timer_dependency"
+    ],
+    "priority": "low",
+    "rule_score": 1.0,
+    "rule_signals": [
+      "Clause contains both positive and negative mandatory forms."
+    ],
+    "likely_issue": false,
+    "snippet": "The following timers are configured by TS 38.331 [5]:\na) t-PollRetransmit\nThis timer is used by the transmitting side of an AM RLC entity in order to retransmit a poll (see clause 5.3.3).\nb) t-Reassembly\nThis timer is used by the receiving side of an AM RLC entity and receiving UM RLC entity in order to detect loss of ..."
+  },
+  {
+    "clause_id": "4.2.1.3.3",
+    "title": "Receiving side",
+    "clause_type": "procedural",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.75,
+    "rule_signals": [
+      "Clause mentions both 'discard' and 'deliver'; check whether conditions are fully disambiguated."
+    ],
+    "likely_issue": false,
+    "snippet": "When the receiving side of an AM RLC entity receives AMD PDUs, it shall:\n- detect whether or not the AMD PDUs have been recei ved in duplication, and discard duplicated AMD PDUs;\n- detect the loss of AMD PDUs at lower layers and request retransmissions to its peer AM RLC entity;\n- reassemble RLC SDUs from the received ..."
+  },
+  {
+    "clause_id": "5.2.2.2.2",
+    "title": "Actions when an UMD PDU is received from lower layer",
+    "clause_type": "procedural",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.75,
+    "rule_signals": [
+      "Clause mentions both 'discard' and 'deliver'; check whether conditions are fully disambiguated."
+    ],
+    "likely_issue": false,
+    "snippet": "When an UMD PDU is received from lower layer, the receiving UM RLC entity shall:\n- if the UMD PDU header does not contain an SN:\n- remove the RLC header and deliver the RLC SDU to upper layer.\n- else if (RX_Next_Highest - UM_Window_Size) <= SN < RX_Next_Reassembly:\n- discard the received UMD PDU.\n- else:\n- place the re ..."
+  },
+  {
+    "clause_id": "6.2.2.4",
+    "title": "AMD PDU",
+    "clause_type": "procedural",
+    "tags": [
+      "state_or_timer_dependency",
+      "contains_figure_caption"
+    ],
+    "priority": "medium",
+    "rule_score": 0.5,
+    "rule_signals": [
+      "Clause presents alternatives that may need clearer disambiguation."
+    ],
+    "likely_issue": false,
+    "snippet": "AMD PDU consists of a Data field and an AMD PDU header. The AMD PDU header is byte aligned.\nAn AM RLC entity is configured by RRC to use either a 12 bit SN or a 18 bit SN. The length of the AMD PDU header\nis two and three bytes respectively.\nAn AMD PDU header contains a D/C, a P, a SI, and a SN. An AMD PDU header conta ..."
+  },
+  {
+    "clause_id": "4.2.1.1.2",
+    "title": "Transmitting TM RLC entity",
+    "clause_type": "procedural",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "When a transmitting TM RLC entity forms TMD PDUs from RLC SDUs, it shall:\n- not segment the RLC SDUs;\n- not include any RLC headers in the TMD PDUs."
+  },
+  {
+    "clause_id": "4.2.1.1.3",
+    "title": "Receiving TM RLC entity",
+    "clause_type": "procedural",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "When a receiving TM RLC entity receives TMD PDUs, it shall:\n- deliver the TMD PDUs (which are just RLC SDUs) to upper layer."
+  },
+  {
+    "clause_id": "5.1.1",
+    "title": "RLC entity establishment",
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency",
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "When upper layers request an RLC entity establishment, the UE shall:\n- establish a RLC entity;\n- set the state variables of the RLC entity to initial values;\n- follow the procedures in clause 5.2.\nFor NR sidelink groupcast and broadcast or SL-SRB4, when receiving the first UMD PDU from a Source Layer 2 ID\nand Destinati ..."
+  },
+  {
+    "clause_id": "5.1.2",
+    "title": "RLC entity re-establishment",
+    "clause_type": "procedural",
+    "tags": [
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "When upper layers request an RLC entity re-establishment, the UE shall:\n- discard all RLC SDUs, RLC SDU segments, and RLC PDUs, if any;\n- stop and reset all timers;\n- reset all state variables to their initial values."
+  },
+  {
+    "clause_id": "5.1.3",
+    "title": "RLC entity release",
+    "clause_type": "procedural",
+    "tags": [
+      "implementation_defined",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "When upper layers request an RLC entity release, the UE shall:\n- discard all RLC SDUs, RLC SDU segments, and RLC PDUs, if any;\n- release the RLC entity.\nNOTE: For groupcast and broadcast of NR sidelink communication or for SL-SRB4, the receiving UM RLC\nentity release is up to UE implementation."
+  },
+  {
+    "clause_id": "5.2.1.1.1",
+    "title": "General",
+    "clause_type": "procedural",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "When submitting a new TMD PDU to lower layer, the transmitting TM RLC entity shall:\n- submit an RLC SDU without any modification to lower layer."
+  },
+  {
+    "clause_id": "5.2.1.2.1",
+    "title": "General",
+    "clause_type": "procedural",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "When receiving a new TMD PDU from lower layer, the receiving TM RLC entity shall:\n- deliver the TMD PDU without any modification to upper layer."
+  },
+  {
+    "clause_id": "5.2.2.2.4",
+    "title": "Actions when t-Reassembly expires",
+    "clause_type": "procedural",
+    "tags": [
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "When t-Reassembly expires, the receiving UM RLC entity shall:\n- update RX_Next_Reassembly to the SN of the first SN >= RX_Timer_Trigger that has not been reassembled;\n- discard all segments with SN < updated RX_Next_Reassembly;\n- if RX_Next_Highest > RX_Next_Reassembly + 1; or\n- if RX_Next_Highest = RX_Next_Reassembly ..."
+  },
+  {
+    "clause_id": "5.2.3.2.2",
+    "title": "Actions when an AMD PDU is received from lower layer",
+    "clause_type": "procedural",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "When an AMD PDU is received from lower layer, where the AMD PDU contains byte segment numbers y to z of an\nRLC SDU with SN = x, the receiving side of an AM RLC entity shall:\n- if x falls outside of the receiving window; or\n- if byte segment numbers y to z of the RLC SDU with SN = x have been received before:\n- discard ..."
+  },
+  {
+    "clause_id": "5.2.3.2.4",
+    "title": "Actions when t-Reassembly expires",
+    "clause_type": "procedural",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "When t-Reassembly expires, the receiving side of an AM RLC entity shall:\n- update RX_Highest_Status to the SN of the first RLC SDU with SN >= RX_Next_Status_Trigger for which not\nall bytes have been received;\n- if RX_Next_Highest> RX_Highest_Status +1: or\n- if RX_Next_Highest = RX_Highest_Status + 1 and there is at lea ..."
+  },
+  {
+    "clause_id": "5.2.3.2.5",
+    "title": "Actions when t-RxDiscard expires",
+    "clause_type": "procedural",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "When t-RxDiscard expires, the receiving side of an AM RLC entity shall:\n- discard the AMD PDU(s) in the reception buffer with SN < RX_Next_Discard_Trigger, if any;\n- update RX_Next to the SN of the first RLC SDU with SN >= RX_Next_Discard_Trigger for which not all bytes\nhave been received;\n- if RX_Next_Highest > RX_Nex ..."
+  },
+  {
+    "clause_id": "5.3.3.4",
+    "title": "Expiry of t-PollRetransmit",
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Upon expiry of t-PollRetransmit, the transmitting side of an AM RLC entity shall:\n- if both the transmission buffer and the retransmission buffer are empty (excluding transmitted RLC SDU or RLC\nSDU segment awaiting acknowledgements and excluding RLC SDUs or RLC SDU segments for which the\ntransmission and retransmission ..."
+  },
+  {
+    "clause_id": "5.3.4",
+    "title": "Status reporting",
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "An AM RLC entity sends STATUS PDUs to its peer AM RLC entity in order to provide positive and/or negative\nacknowledgements of RLC SDUs (or portions of them).\nTriggers to initiate STATUS reporting include:\n- Polling from its peer AM RLC entity:\n- When an AMD PDU with SN = x and the P field set to \"1\" is received from lo ..."
+  },
+  {
+    "clause_id": "5.5",
+    "title": "Data volume calculation",
+    "clause_type": "procedural",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "For the purpose of MAC buffer status reporting, the UE shall consider the following as RLC data volume:\n- RLC SDUs and RLC SDU segments that have not yet been included in an RLC data PDU;\n- RLC data PDUs that are pending for initial transmission;\n- RLC data PDUs that are pending for retransmission (RLC AM).\nFor the pur ..."
+  },
+  {
+    "clause_id": "5.6.1",
+    "title": "Reception of PDU with reserved or invalid values",
+    "clause_type": "procedural",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "When an RLC entity receives an RLC PDU that contains reserved or invalid values, the RLC entity shall:\n- discard the received RLC PDU."
+  },
+  {
+    "clause_id": "4.2.1",
+    "title": "RLC entities",
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency",
+      "state_or_timer_dependency",
+      "contains_figure_caption"
+    ],
+    "priority": "medium",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "The description in this clause is a model and does not specify or restrict implementations.\nRRC is generally in control of the RLC configuration.\nFunctions of the RLC sub layer are performed by RLC entities. For an RLC entity configured at the gNB, there is a peer\nRLC entity configured at the UE and vice versa. In NR s ..."
+  },
+  {
+    "clause_id": "5.6",
+    "title": "Handling of unknown, unf oreseen and erroneous protocol",
+    "clause_type": "procedural",
+    "tags": [],
+    "priority": "medium",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "data"
+  },
+  {
+    "clause_id": "5.3.1",
+    "title": "General",
+    "clause_type": "procedural",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "ARQ procedures are only performed by an AM RLC entity."
+  },
+  {
+    "clause_id": "5.3.3.1",
+    "title": "General",
+    "clause_type": "procedural",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "An AM RLC entity can poll its peer AM RLC entity in order to trigger STATUS reporting at the peer AM RLC entity."
+  },
+  {
+    "clause_id": "6.1.1",
+    "title": "General",
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency"
+    ],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "RLC PDUs can be categorized into RLC data PDUs and RLC control PDUs. RLC data PDUs in clause 6.1.2 are used\nby TM, UM and AM RLC entities to transfer upper layer PDUs (i.e. RLC SDUs). RLC control PDUs in clause 6.1.3 are\nused by AM RLC entity to perform ARQ procedures."
+  },
+  {
+    "clause_id": "6.2.1",
+    "title": "General",
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency"
+    ],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "The formats of RLC PDUs are described in clause 6.2.2 and their parameters are described in clause 6.2.3."
+  },
+  {
+    "clause_id": "6.2.2.1",
+    "title": "General",
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency"
+    ],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "RLC PDU is a bit string. In the figures in clause 6.2.2.2 to 6.2.2.5, bit strings are represented by tables in which the first\nand most significant bit is the left most bit of the first line of the table, the last and least significant bit is the rightmo st\nbit of the last line of the table, and more generally the bit ..."
+  },
+  {
+    "clause_id": "6.2.3.1",
+    "title": "General",
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency"
+    ],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "In the definition of each field in clauses 6.2.3.2 to 6.2.3.5, the bits in the parameters are represented in which the first\nand most significant bit is the left most bit and the last and least significant bit is the rightmost bit. Unless mentioned\notherwise, integers are encoded in standard binary encoding for unsigne ..."
+  },
+  {
+    "clause_id": "7.1",
+    "title": "State variables",
+    "clause_type": "supporting_semantics",
+    "tags": [
+      "implementation_defined",
+      "cross_clause_dependency",
+      "state_or_timer_dependency"
+    ],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "This clause describes the state variables used in AM and UM entities in order to specify the RLC protocol. The state\nvariables defined in this clause are normative.\nAll state variables and all counters are non-negative integers.\nAll state variables related to AM data transfer can take values from 0 to 4095 for 12 bit S ..."
+  },
+  {
+    "clause_id": "7.4",
+    "title": "Configurable parameters",
+    "clause_type": "supporting_semantics",
+    "tags": [
+      "cross_clause_dependency",
+      "state_or_timer_dependency"
+    ],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "The following parameters are configured by TS 38.331 [5]:\na) maxRetxThreshold\nThis parameter is used by the transmitting side of each AM RLC entity to limit the number of retransmissions\ncorresponding to an RLC SDU, including its segments (see clause 5.3.2).\nb) pollPDU\nThis parameter is used by the transmitting side of ..."
+  },
+  {
+    "clause_id": "4.1",
+    "title": "Introduction",
+    "clause_type": "architecture_overview",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "The objective is to describe the RLC architecture and the RLC entities from a functional point of view."
+  },
+  {
+    "clause_id": "4.2.1.1.1",
+    "title": "General",
+    "clause_type": "architecture_overview",
+    "tags": [
+      "state_or_timer_dependency",
+      "has_bullets",
+      "contains_figure_caption"
+    ],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "A TM RLC entity can be configured to submit/receive RLC PDUs through the following logical channels:\n- BCCH, DL/UL CCCH, PCCH, and SBCCH.\nTransmission\nbuffer\nTransmitting\nTM-RLC\nentity\nTM-RLC\nchannel\nradio interface (Uu/PC5)\nReceiving\nTM-RLC\nentity\nTM-RLC\nchannel\nUE/GNB/UE A GNB/UE/UE B\nBCCH/PCCH/CCCH/SBCCH BCCH/PCCH/C ..."
+  },
+  {
+    "clause_id": "4.3.1",
+    "title": "Services provided to upper layers",
+    "clause_type": "architecture_overview",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "The following services are provided by RLC to upper layer:\n- TM data transfer;\n- UM data transfer;\n- AM data transfer, including indication of successful delivery of upper layers PDUs."
+  },
+  {
+    "clause_id": "4.3.2",
+    "title": "Services expected from lower layers",
+    "clause_type": "architecture_overview",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "The following services are expected by RLC from lower layer (i.e. MAC):\n- data transfer;\n- notification of a transmission opportunity, together with the total size of the RLC PDU(s) to be transmitted in the\ntransmission opportunity."
+  },
+  {
+    "clause_id": "4.4",
+    "title": "Functions",
+    "clause_type": "architecture_overview",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "The following functions are supported by the RLC sub layer:\n- transfer of upper layer PDUs;\n- error correction through ARQ (only for AM data transfer);\n- segmentation and reassembly of RLC SDUs (only for UM and AM data transfer);\n- re-segmentation of RLC SDU segments (only for AM data transfer);\n- duplicate detection ( ..."
+  },
+  {
+    "clause_id": "6.2.3.10",
+    "title": "Acknowledgement SN (ACK_SN) field",
+    "clause_type": "field_definition",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Length: 12 bits or 18 bits (configurable).\nThe ACK_SN field indicates the SN of the next not received RLC SDU which is not reported as missing and is not\ndiscarded due to the expiry of t-RxDiscard in the STATUS PDU. When the transmitting side of an AM RLC entity\nreceives a STATUS PDU, it interprets that all RLC SDUs up ..."
+  },
+  {
+    "clause_id": "6.2.3.11",
+    "title": "Extension bit 1 (E1) field",
+    "clause_type": "field_definition",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Length: 1 bit.\nThe E1 field indicates whether or not a set of NACK_SN, E1, E2 and E3 follows. The interpretation of the E1 field is\nprovided in Table 6.2.3.11-1.\n\nTable 6.2.3.11-1: E1 field interpretation\nValue Description"
+  },
+  {
+    "clause_id": "6.2.3.12",
+    "title": "Negative Acknowledgement SN (NACK_SN) field",
+    "clause_type": "field_definition",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Length: 12 bits or 18 bits (configurable).\nThe NACK_SN field indicates the SN of the RLC SDU (or RLC SDU segment) that has been detected as lost at the\nreceiving side of the AM RLC entity."
+  },
+  {
+    "clause_id": "6.2.3.13",
+    "title": "Extension bit 2 (E2) field",
+    "clause_type": "field_definition",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Length: 1 bit.\nThe E2 field indicates whether or not a set of SOstart and SOend follows. The interpretation of the E2 field is provided\nin Table 6.2.3.13-1.\nTable 6.2.3.13-1: E2 field interpretation\nValue Description"
+  },
+  {
+    "clause_id": "6.2.3.14",
+    "title": "SO start (SOstart) field",
+    "clause_type": "field_definition",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Length: 16 bits.\nThe SOstart field (together with the SOend field) indicates the portion of the RLC SDU with SN = NACK_SN (the\nNACK_SN for which the SOstart is related to) that has been detected as lost at the receiving side of the AM RLC entity.\nSpecifically, the SOstart field indicates the position of the first byte ..."
+  },
+  {
+    "clause_id": "6.2.3.15",
+    "title": "SO end (SOend) field",
+    "clause_type": "field_definition",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Length: 16 bits.\nWhen E3 is 0, the SOend field (together with the SOstart field) indicates the portion of the RLC SDU with SN =\nNACK_SN (the NACK_SN for which the SOend is related to) that has been detected as lost at the receiving side of the\nAM RLC entity. Specifically, the SOend field indicates the position of the l ..."
+  },
+  {
+    "clause_id": "6.2.3.16",
+    "title": "Extension bit 3 (E3) field",
+    "clause_type": "field_definition",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Length: 1 bit.\nThe E3 field indicates whether or not information about a continous sequence of RLC SDUs that have not been received\nfollows.\n\nTable 6.2.3.16-1: E3 field interpretation\nValue Description"
+  },
+  {
+    "clause_id": "6.2.3.17",
+    "title": "NACK range field",
+    "clause_type": "field_definition",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Length: 8 bits\nThis NACK range field is the number of consecutively lost RLC SDUs starting from and including NACK_SN."
+  },
+  {
+    "clause_id": "6.2.3.2",
+    "title": "Data field",
+    "clause_type": "field_definition",
+    "tags": [
+      "has_bullets"
+    ],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Data field elements are mapped to the Data field in the order which they arrive to the RLC entity at the transmitter.\nFor TMD PDU, UMD PDU and AMD PDU:\n- The granularity of the Data field size is one byte;\n- The maximum Data field size is the maximum size of a PDCP PDU.\nNOTE: In case the upper layer is BAP as specified ..."
+  },
+  {
+    "clause_id": "6.2.3.3",
+    "title": "Sequence Number (SN) field",
+    "clause_type": "field_definition",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Length: 12 bits or 18 bits (configurable) for AMD PDU. 6 bits or 12 bits (configurable) for UMD PDU.\nThe SN field indicates the sequence number of the corresponding RLC SDU. For RLC AM, the sequence number is\nincremented by one for every RLC SDU. For RLC UM, the sequence number is incremented by one for every\nsegmented ..."
+  },
+  {
+    "clause_id": "6.2.3.4",
+    "title": "Segmentation Info (SI) field",
+    "clause_type": "field_definition",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Length: 2 bits.\nThe SI field indicates whether an RLC PDU contains a complete RLC SDU or the first, middle, last segment of an RLC\nSDU.\nTable 6.2.3.4-1: SI field interpretation\nValue Description"
+  },
+  {
+    "clause_id": "6.2.3.5",
+    "title": "Segment Offset (SO) field",
+    "clause_type": "field_definition",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Length: 16 bits\nThe SO field indicates the position of the RLC SDU segment in bytes within the original RLC SDU. Specifically, the\nSO field indicates the position within the original RLC SDU to which the first byte of the RLC SDU segment in the\nData field corresponds. The first byte of the original RLC SDU is referred ..."
+  },
+  {
+    "clause_id": "6.2.3.6",
+    "title": "Data/Control (D/C) field",
+    "clause_type": "field_definition",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Length: 1 bit.\nThe D/C field indicates whether the RLC PDU is an RLC data PDU or RLC control PDU. The interpretation of the D/C\nfield is provided in Table 6.2.3.6-1.\n\nTable 6.2.3.6-1: D/C field interpretation\nValue Description"
+  },
+  {
+    "clause_id": "6.2.3.7",
+    "title": "Polling bit (P) field",
+    "clause_type": "field_definition",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Length: 1 bit.\nThe P field indicates whether or not the transmitting side of an AM RLC entity requests a STATUS report from its peer\nAM RLC entity. The interpretation of the P field is provided in Table 6.2.3.7-1.\nTable 6.2.3.7-1: P field interpretation\nValue Description"
+  },
+  {
+    "clause_id": "6.2.3.8",
+    "title": "Reserved (R) field",
+    "clause_type": "field_definition",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Length: 1 bit.\nThe R field is a reserved field for this release of the protocol. The transmitting entity shall set the R field to \"0\". The\nreceiving entity shall ignore this field."
+  },
+  {
+    "clause_id": "6.2.3.9",
+    "title": "Control PDU Type (CPT) field",
+    "clause_type": "field_definition",
+    "tags": [],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "Length: 3 bits.\nThe CPT field indicates the type of the RLC control PDU. The interpretation of the CPT field is provided in Table\n6.2.3.9-1.\nTable 6.2.3.9-1: CPT field interpretation\nValue Description"
+  },
+  {
+    "clause_id": "7.2",
+    "title": "Constants",
+    "clause_type": "constant_definition",
+    "tags": [
+      "state_or_timer_dependency"
+    ],
+    "priority": "low",
+    "rule_score": 0.0,
+    "rule_signals": [],
+    "likely_issue": false,
+    "snippet": "a) AM_Window_Size\nThis constant is used by both the transmitting side and the receiving side of each AM RLC entity. AM_Window_Size =\n2048 when a 12 bit SN is used, AM_Window_Size = 131072 when an 18 bit SN is used.\nb) UM_Window_Size\nThis constant is used by the receiving UM RLC entity to define SNs of those UMD SDUs th ..."
+  }
+]

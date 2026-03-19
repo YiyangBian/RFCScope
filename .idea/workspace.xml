@@ -5,12 +5,233 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85609a54-6ccc-4735-8808-3ec998536904" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/analyzer/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/context_constructor/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/context_constructor/analyze_section_dependencies.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/context_constructor/chunkify_structured_corpuses.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/context_constructor/generate_corpus.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/context_constructor/get_reference_relations.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/context_constructor/get_section_dependencies.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/data/raw_pdf/ts_138322v190000p.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/llm_review_3gpp.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/prompts_3gpp/inconsistency_prompt.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/prompts_3gpp/underspec_prompt.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/stage_3gpp.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/00a43951ba9c09a59edf91c4c7895b56a341b118ef405ae800dd8153107f23d2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/0243c4093de4cadd616fdcb161e6fee38af27d3f83065d9df0ccbfcf000dd223" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/04549e5f95e9c4ff65673498631884d602b9d029dd8ca751f4ace0e061053290" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/06eaa9faf9c95b945d0db39885e522d0244012295016546a20b11e276184c242" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/06ec5613bb707e4bfb6d276407d4e9806ee661b04a0bc1899fd5a359e1799bba" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/08deb01d943394837f175bd7bf3c2466921bb9aa5e0b4a6007e773c6b752e4b0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/092d63cd24f0fa96bab027e9420e7f413773eeec43ff905dd771e97ab65cd95a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/0aab2b22e69504bd00ecf35a3aabc9b22c56e2926813b31a56b2593adcd04925" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/0cb5918ff83a3456262d9de09da3b6dd5a7c9e9af1fd28463611c1fb00b5c5c5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/0d6922774b719e5a963acc3679427e7fa9433ddb442e5668b4120ba3d93f20c7" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/12606e0ff8d90b7babaf60b10c9c2ad7a9fcedf38c1d5a002f7eba668acd1e6e" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/132222cdf1bb14618a1eb888a6933b449126112fec925a165fa52885a987af57" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/15a1dfa1872bf49ed00085bd692f2cda81aa98f5c2dba1ec41bc16f2ac76ab8b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/16906caa8e8ff094f849f81893ba401e3441c16645200c02ae54c1f7f320cd48" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/17cf51cad2b7e7f42189bcc46eebf66079b6fbaddbdd3a2c44a6575549069d3d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/1bc257cd1fe9bff37463e95eed9b2dee973d5411f8108f6678509e4208d236f8" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/1d53b4f1400a4753da18dae045ee817b6ab2c62453ac02e8071001796a69c34a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/21a903178f4acf19164e0be8a2981c1e65cea667cf2faa1eb3ba241d685e43fd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/23c177ef9c4d63807e378911870a28aa0cba9b303457b2f150199b6d3572a3e5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/23e0366dd3f1c998f7397ca697401d172af0efc9bbe70d311aeb82c9d74ef9e8" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/257083e271570aa0daf5cbf25d381ae542532be08588e044a3bf0287914dcad3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/25c3eae36e42268492359d817eb6fc182a3a4496ccb5dca2f44bad3c10ed5cbd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/2683b8eec38d6bce6307f59721a28189d7bb07d96f0d435f7fdf92b6b48c40db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/277527e076244b8dd29c9169e4b2d436966b77e053c98a1434407f70e69ad4e1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/296e95123366f150e7a932b0effbdcff27ecbd19fa76eba9598f4efa44645e1c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/2b6992600d5c9a502f767f6d453ed47e58a8bb675b64feff288f39262d8ce405" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/2c4f2ba022be5c7e554125fee9d49a52728d5ef9e6eeed238f2bb05a3d13b3df" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/2d11508e82e4c40d03d15eaff46a9471ce560cc10c31669289fa12b0ad9cd109" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/2ec452ea2e9f6d71533465d66f37d69da6c96ce558e8ee509842d539d7f13250" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/2fc9c1010e34f7b7e1c565f0cb38cad38d6079b68235d88ae46ee4baec6667bc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/300f0d5ce38bdfdaace53122b757573f25b42288e6d5f774ea316c5142923d3b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/3039822641689505b06387d34c084b97a78a14092b2f064f41f6af994e9eddbe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/304eaad02cb3f9e47cec5898fe04957a39dc89f3aa54a115c072cdf1f4d1ac89" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/31aa00c0c1bda9cfba082f4638f3825fb4c687785448e9f0d9900ca10ae3a9bc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/31cac0e4963e79dbf248de6876de355a964320e798911f31ca7f66d4f60cbe3a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/354acd947b56d8928bc0d37cc880c61e390c52685f9eef6ffa28f849fcb24b93" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/37e213c3a1842c508c1c7740e35c20493bf98c07514c59df9f61a1e815fe58f9" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/3ac72aba1ce8eae93044d84c2382c9526da1745a6915ad26634f58239608d4df" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/3d6faca8e05e74b3ef8f492215afb2e515dc4d92b8b40ae34e4f651531434002" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/3dac7a3c21a7091fd54e2f211fbe75a12d25cc95f98c5fed0683323e9388f7cb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/3e2bb7f086da509536e306c0dce0cefc2d16cec84ea627f69f90f304b640d3b3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/3f557f7b80e4e60064fd97ce75cbe25b551bf01353d84168b53c5e8faba8678a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/4210b4c09d187dd9e5c5bebc327e4db770a81449f6b1609604c9ef27769459e8" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/42df5553e5ec488891770f1be1a4fe93c8c61e352250857a2a9267c804d548fe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/460ae8f4f2e53fe595918ad0741eeb835e3b26c9bd94a7b3e008687a0797a0ba" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/476a84a57bacb013b712cf063b62523c3563088a979373d62664270862f8b8bf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/488ef155b70177952b7ae2adb26622a7d2749190a98f4c470ff6a527dc767826" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/4917b62be0019d2d7b503be23ba7c9edca2b544e4e5f96411dc683e5a045b778" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/49fd8e9e58896f2d4c207b50fc15a7be11e1ba2c7fe44a5aec22985ba861d521" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/4c007ac904c5419e36558c2412c6229cce83b3def8d05471deefc6dd059cc048" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/4cb450f89ed6032a4f738f5308ccda46e9500b425999166ca44f3e50379ced9d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/4cb4f0b1ef0a868fdf2c8753ec2ef3fccc80b252268b6b54de5c023007be450d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/4da3056175dca06a64a2c6ee528f5cef4f726cdaad845aefe5bfb37551dfb68d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/4dafadb30f03c627965a2b2f55802f8e91ba825c4659b41c74e3618b8952a2f8" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/4ecf7de22393ae474faf7bb858cf04bd3824596dd650977aee3c6801cf4c9fca" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/512763950777f52940899d1fa187d5d863d3ff54c77f43b87d15666086ec9d2e" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/51b479c20736e6260d706ac9f9e8a911e1801d14987bbe3545e5e06ef1f2c7fb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/51f7c652ba00f241960288ac32c7544a6c02e78ae6f36b3f0e6180bbf2215a69" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/527dfc11dd022384f75320aa5164a5b787ddcdd2147a21345046ad79c92aa28c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/53e31b164005c7caeb9ac9e27a37ca650802201fbfc7000bdb1dbbfa957aeb09" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/541ab40763cbb315cb3663db2259dae9ae1ee61b45e7fc8f6b6a1da799315dba" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/544581cb9046f5767f4fc4a9718c93b3d20c47ff311910d2de6657b5bb1a51a8" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/55584674939c137763c89564938086ec0bb7e253275759140019e294071c9b6e" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/56017868f282db57af4877e6c2f9b8bfc4d7732f4e2646c99ecab6d843cf095a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/56a3c2f50ccaa110bfc51670c228ad99b80bb2e957041c242cb3ffa50d127fce" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/576106b88fd7f96cd2f89b48660e12ef4c2f1f148074baa32c2dfae36197d36e" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/57c848700b82f7a25f620aadcf1a63413e92373402fd434d5cc946831fcfc195" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/57e1237667d2f9c1bda9fc9bfc4f13b0dc855ddd75da3d3a1381beb2534fa906" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/5a73b0692892a8703d4a4176221b1c8abbdf6bdba42f01d3c9a905457952ff20" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/5c1fb5c51539cae6b74bcf303a946d1a52ef786a13365b7fbdf33dab0d8fec9e" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/5c82c574ad856ee90521a37ea2ae38b6688418648008c5091c95dfbb557003ab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/5c9e6e35ec8d914685fda2c4883e818dd3986c0687935779c2c61288a509b31d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/5ce7a627f120070eeb6b6a72a0593d20be06dbac691e4b9e06bafdaf7634b09f" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/5d76a2966f143c35aecbdd70999d744d79ab1222840f07aa9bddb24b224f4736" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/5ec83b24a8c432d6a2ef1d81c14b5e5c4359bce98e91e9a3a64e57c65d97ae28" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/648f2ad917e1fe0e7933bc5c17cb0d5304c7005935330ed7ab658d2854b3c6a1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/653c82c08b69a048aa75b26b99f2ac78e4339b4184b381e123cba619ee148f54" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/65b5d882ba85277a744cf32b50f1dc8142986532e0243c787595be48e18081b1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/65d46ba38984f04bba614a2320a445504870c31e61b792c9a17ba91eaae18b7b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/665f761a3c13e6db44b078603bb152b9173aeeeb3d6e057030bd79062254624f" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/671ecb2e6081875d1212749ddb562e62c0432fbefb9bc5b4a9e1a09c4c19c928" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/672ca408ada6ede6ed335bee975257c84e99227f9b356604c1df1d0d880109cb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/678635057c61220e30729dd497c0f95eb2adb2360e2939e16d5d080a2b158449" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/68bffc62af94044c5bd967a2e94cbb81838f5d3d712b5b01bd6289ed14e10b0c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/6a28dade998f69dc6e2661a607408da1f8ec02d6b44654e873234114b3425207" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/6db87b83f752e7879a4309cf8620eb903d3ff0691c2a2663c348154b533ef73c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/6f1997017d77c57d5286e398ed709c4aff7eef774038e933d127a70d096c62a6" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/7031bb7c5e0d1c76244b2ac0e81d17191d568c28d2482f4019ff6096cc31ae8e" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/72e77ef3b06a9a7d8acd6ed8a62f51da23af3f75d88c5a686dab28bd5c536890" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/72eb7015f439d14706974e5c322ba3685bdd4dab9cc96b67d08719944fc79918" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/72f99ada79b1b4acaa1a4b7edf64cf465f4ea4bebedd0d0acdc8a75c0f21c3dd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/735e22c787efe0f74299927ccf8b6af8232ef0eae30de8d7a508b382fef14f0f" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/76b9f4cb57093a6bf37da4967fd9c8b4fb215f2cbdf0095f5677b47730256043" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/781357d3486c249c59e9b63fddbd29e1c439097fe8a48aa8f21d36b6fc78b35a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/7a8f45a0d8440301a7d5186ba56c8b80f8d1959e151a485738f792a774bd9c83" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/7b52c4f4a30b3764abd5581244965843abd19aa77a328ffa047f4bd9c1fc05a0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/807cc3b18ed19543aa909ce17b16b566a67fd4628994b6964e3377602e9da3a9" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/8190b64a5665c5209673ca475b905c88867fd5a29b9a22d71fdc42692c618b87" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/843659cb2ad2ea419ec38a738c7a07f1f04e47f61032d1690c0e4be9723861eb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/84a45f65a13b7aeb6dfe32d4b2e1d49a5c7d39cd8d176be2f825d0c0265dc5f6" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/8550796f95693b34c796698dc6542465884b39dfab8d609e658423eb4a52c20b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/86b52fbda17bb9f36d0c2aa133fd1179c6016266825b969b39be2c359f551c7a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/86e6979451b136dace6eb8444866517ba64bdfd7e42038b205950b6c6f685dbe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/8774bc73664dc8f44a2c66a4f77c8636ad001398c96bfd970b26bb8f1cde7478" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/87a6995ed258a2cdbeb6f4c864c9b6313674938e12218a8bd63320f05cbd9bd5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/89d2412c723b91ffb0773cc214f5071230ef8ac78ab6d6f10dda19a7975e42b9" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/89ec5d7e018c12ce3c74622f392c4502c9b38332fd945bd9fa432d399763d0af" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/8ade531c836d715b9203f15b765b8e647acee4a72472d5732f22f02145907ab2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/8aec67a54cf2b0bf186dc6fa47b784e9dbf0d5259ff3353c33df185c7da9ffec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/8c3b4d1f0b3f37e83a01d4b27b98c71b50b39e12aa79b3639bf5533fcfde671b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/8c41af77749c13848d4a8a0ad7eae0c2baae5d2a576006806156ce745b3a9675" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/8d3ec6e8c02057b262d9bcb60bf4e6894573a103e41295a6c51d189a1acfe45b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/8e2e563d3f48958e4d083508d4b99f8d607eec68dd3c595e4a99ead6969185a1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/8f58ccdb971cac488157934dcfa7945f35fe84125b450183fef9796819492e2c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/8fb1e56bdf4d7d5e4daeef3f75146da1d204498df8eb581a6484b5290136f4f9" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/91b462d99dcb97f2c25680a3a6505dc6aef88e5ed9b9ba440162e9a7d73a54c6" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/94951f62449b1692cc00390e2a23ec0b7b5ec7bfe5ae9dcd564f703592d57ab1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/954d3329e9959fa49a04bbc3335ef3f706189a391b7bf3ab4b0fa23020d982f2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/97372d153d9f63fc325f2e1bdd438c08a58d10583df0d1cfbe412c92fc94587b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/984d6a58edea0549bcf3b17d5ebfd207399868a91892363cf306e74634ee8f22" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/9b1073b421d920b42de2e8b08328145148d53074d0c161526a262ff6ad79b578" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/9dd88cd9d7365084f44fc46cf852c542fe400b5bc7cf251904e013232825090a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/9e7fc58180dde6a0fae8d0a9a7df5ae8d0455cabf4604dc759a8342fa12cc7f5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/9feacea70df0914fe2b37e4209f9b0abd8dbdac97fe389cc84037e6ee14b425e" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/a53b97adec8250081e96aaec6276616e3ff09499dc3cf1ac7c57b5275c6abc56" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/a6dedc40aec0b1dd64607a8bc4f10bc09c51cc2465c993779358c0bc72f9f4f6" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/a74db3e47b520ab2fff384c4af5f9ba9393ba31731de3a7231938ac8453bdac7" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/a7ad6df0a7ddf4615a284efb863019fc8064ca57682f6df3d6cbb56c39fde2a0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/a7ebf6f41ab0cfdcf8bf9c1f062f80ed7f58eba305f00403542d196d46969a02" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/a842601588eed26313dcb33978dbc8f1cd915e6ec37c23f3c728a967fb24afa6" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/a8bd33b9d01e1b83e521fd312a4672d1dcee9b5ef406d3f503a5bf94a527ad96" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/aabd0aa346baef9c67dcc2a8f8884587fe0f530179d24fef9f1536e9020bead5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/aae4b5279e2082f53a28ce91f3e54b28960f2967bf2787cf178cdc39f849ff72" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/abf66abfb247a853533d5a32df2eea654f4119167f55c640cec9f7364e260c5c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/b1d7d956d4dbda81790289aacb6e7d39b83b125fa3155753b5ce9effe997d9ce" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/b3087885da32380aabe30f5549ab3e4b89fc5883f2ba51b9cf1754d19bea865b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/b73e7be57084ce8401b1beefc554e9fa6f8a222daf4572a8186c4144c5b8cd02" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/b8539dc6dc852a2e3b049d1450c5a06745235d1b01dd846b1e0157a3da98842c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/b9528215b732fd603e54d0f4c71f5274c269d91c7eb7c1f03289a113709a3565" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/b9fc339a272b9c1cfdc800a5defaf5e1f845bd338b4618033e65ccdfccccad81" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/baa33b27b66e7ad88e82e74b46af69ee54f7464e7cd2f6db7603b853247d8a85" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/bac20f4758edda79a16e68931fbc2bcac3a9aa0e3fd361e2555978110270bbe5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/bad8abafa8499c3b4e003f88fe285451b7af7abbd70851b7844a8741747571d0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/bbf24f10d531b7ba094b0d12c8c03dac44a089c806022518cc4ab432f7c672f7" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/bf2e41a7ed47fb3e588948cc898c39ea611dd941e9eb48e30b8bcdfa53770d83" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/bfa5ea589b1e948f908384b580d6e47b8d597f765d922858672762a0df1a09b9" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c03d2281411bf365718a1eb574688db537beab6585d26509a217a7b11722612c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c0c1a4d1d96259b07803d8219fed3629027a3724553adbe4fda83ac48e56350c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c1ad15d8c4405c14f0db559026deca55d5d66d2429cb8f645873c1437baac398" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c1b516d3ca6f3812fb131fe5bbe4cdd4231b5c24093db27ef77d26140f2501dd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c2f611b61d1eefe58c82c091699de433cf628e5b1bfcb21b05d5479a28446ed9" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c3372fe946c6d95e2059a8c74f4ce4c85a15747fa9fc9cbec4de1bb056573871" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c48d9945307702f23a569d8e9e49e92795af385513cfb105c62223f84d554433" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c50e3fb0660b12f19350ba93e40a6af389872e325777800733cc25d9beddf3f4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c5e21e066fede401aecc08385d380239ea0f1638adaeed63573acae4f46d5fb4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c74d74e1bdc20e7adc6150618a9abaef3701861f221259cbcebaf902892abe88" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c782565faf2dbb1e33d4bfea2226e4799ba2cc955b7aa7d391fa9e1f8486f604" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c7a80dbde9795a722eebc8abec0f888f28568cb01fb057b6d30a0feae37f549e" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c7f3d5ce2f15e9bc38048db25cbb134664e05c5c08a69355ee45fbb687112a0d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c7fa705d5691eef1efbfb3073723d509522c8219aab487b8441f1275e3c15ce4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c9102a0408cb8e7c18074bcfc2a7c980cd7bff090531b29d58edfbe2b585f7a5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/c94c92aac61b4a24c8af7b36d16fa40e5ba5c9046b3ef0ccce346ba265ef2489" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/cb1cbd33ceb02d82a4827c519eb19dfbb147a7ca75f1460b190342ebc734e08c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/ce2116cd3f8e7831e4813b559152921591a117dc75605cffe98adc274d12b6f0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/ce41d9c8752c04e0d1f3139900f6a5f3e13a5e5e2d20f7c3127ab12fe9a2befd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/ce8689bd47cc1717f2e69d2628070723c052b21d0075c4e21a97ee87e29bdf8f" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/cf15e7fd249ff35ad399808e1b49804bf6c8462276ebbfe4a23c58c364ded2d5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/cf3696a82535d52fc7626246145185397a042914193e55649114be2f597f14bd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/cf9b8a956902d4aa3b4d676665b0cce0c720dc0bd9c36d4587e4b6cea08ce621" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/d4732b82428c93db01e2e7235e51170dc835f349fa889adcfddbf0841bdf85c5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/d682e3c76397cf427f2f26b2690927e5025f7007459ac99d75ff4b57bb542072" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/d73fbbfb1aaea019dc6831ce26b8091cc53c49f579d412464d190f710972cdba" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/d7665bd153ece185d60baec9692eaadc0a34992860e6ad4cca5954926ea74c7f" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/d8dd1b4a0f5311c592b33c84c4ed0afb27adaab5c4e9dc55b4a61de1e7c16f03" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/d9bfbd5be38e5fbdc87158941450ddc2c1bca2adf76fd235b472f1d6628f9afd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/db60061e0efa7a93f3653013046bf8df445bd34f2fa6c9c23a7c01b7c78b550e" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/dc8496f649c8b54c35122fdd828487de2620e9c858b4ae325272b4350e63f2d7" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/e048fe08c0a40befd79c8b68071590e3133b24475f0c59032d724ec9c548a26d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/e15e0a5c3689d5ec23c4cbb4478afd23be109a5e21e1999fd9ea46926d326a16" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/e1e9ea0e08521fbd1e353a9368724511a872df7077899869682928eace98524d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/e1eb5bf33e3107a676c096ac670443115180c06b9b45a1b9555cbb4c38e6bd6a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/e53432989c6bf9bfcf18cbd6c041df0a8de0359ab5ca4e2cd149ae746f1023ec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/e63897795e2fae52d43ddbeddd64598f0013014796637213411ffaf989244c67" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/edf1a6fc520a4be19951d5d5b19f84b4858a10dae6c9fcf5aa16e120ef15ff46" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/ee5f991455764f1364122f01f8241e73a7d0bf103593d16f97c845ad7579f3bb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/eebee39d97909c2260e560d8cc4f25aec3724e757f11f2ad3878354ec486e814" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/f04fe39b5c543b6d8cea32544772be8b014bec241daa8a27ec642f4135a67aa1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/f0939c36f2f38ac51aeae3e32cbac9010b853be9a4fdf81ffef1ac34bfca145a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/f0a005b8a3df5cdf0432d06779dda8a4328eb6f6e98fc0adc4b1b8932f5a358a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/f46b945b6e5353e49af658bbd2b04a2fbe40d08fd36ea8c935d541c2d03c7366" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/f81ad65c870a319f30a432c624ba966d8d2281c9deef89106b555d4dedc6f970" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/f8a5affb91a4ce95c124e4f8d3017826b6bbdd3caaec4b041dadc515468d8470" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/fb774be2a3d1e0e839171c52a0d808ccd81080d574ada7e4b924941d9c2b37d1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/fbc7a6a8902b02b7d76e828a68c90997e391e2b387defdba64f9b55ee9918f03" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/.cache/fde5e566ee84196edce2c26e3dda40131e21c2b1e12749316869f661f7878122" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/analyze_rfcs.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/cache.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/references.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/rfc2html.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RFCScope_3GPP/utils/rfc_retriever.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RFCScope/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/RFCScope/.env.example" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -23,21 +244,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.stage.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "0e29da1b",
-    "last_opened_file_path": "D:/RFCScope/RFCScope/stage.py",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.llm_review_3gpp.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_3gpp.executor&quot;: &quot;Run&quot;,
+    &quot;Python.stage.executor&quot;: &quot;Run&quot;,
+    &quot;Python.stage_3gpp.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/LAaddress&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\RFCScope\RFCScope_3GPP\data" />
+      <recent name="D:\RFCScope\RFCScope_3GPP" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\RFCScope\RFCScope_3GPP\data\raw_pdf" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="stage" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="RFCScope" />
@@ -81,7 +315,13 @@
       <option name="presentableId" value="Default" />
       <updated>1771791833967</updated>
       <workItem from="1771791835322" duration="9521000" />
-      <workItem from="1771811642511" duration="70000" />
+      <workItem from="1771811642511" duration="163000" />
+      <workItem from="1771811814933" duration="612000" />
+      <workItem from="1771955205838" duration="661000" />
+      <workItem from="1772056376656" duration="11000" />
+      <workItem from="1772994990488" duration="15265000" />
+      <workItem from="1773075036263" duration="5903000" />
+      <workItem from="1773162505212" duration="467000" />
     </task>
     <servers />
   </component>
@@ -100,6 +340,10 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/RFCScope$stage.coverage" NAME="stage 覆盖结果" MODIFIED="1771798284839" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="D:\RFCScope\RFCScope" />
+    <SUITE FILE_PATH="coverage/RFCScope$run.coverage" NAME="run 覆盖结果" MODIFIED="1772995362283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RFCScope" />
+    <SUITE FILE_PATH="coverage/RFCScope$run_3gpp.coverage" NAME="run_3gpp 覆盖结果" MODIFIED="1773007845657" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RFCScope_3GPP" />
+    <SUITE FILE_PATH="coverage/RFCScope$stage.coverage" NAME="stage 覆盖结果" MODIFIED="1772995372178" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RFCScope" />
+    <SUITE FILE_PATH="coverage/RFCScope$llm_review_3gpp.coverage" NAME="llm_review_3gpp 覆盖结果" MODIFIED="1773008339971" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RFCScope_3GPP" />
+    <SUITE FILE_PATH="coverage/RFCScope$stage_3gpp.coverage" NAME="stage_3gpp 覆盖结果" MODIFIED="1773005060380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RFCScope_3GPP" />
   </component>
 </project>

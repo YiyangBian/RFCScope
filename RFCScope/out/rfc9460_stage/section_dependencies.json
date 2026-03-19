@@ -1,0 +1,1802 @@
+[
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1"
+    },
+    "document_type": "EXTERNAL",
+    "document_tag": "draft-ietf-tls-esni-17",
+    "reference_type": "TEXT",
+    "reference_value": "TLS Encrypted Client Hello",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": "The \"TLS Encrypted Client Hello\" (ECH) is a proposed extension to the Transport Layer Security (TLS) protocol, detailed in the Internet-Draft \"draft-ietf-tls-esni-17.\" This extension aims to enhance user privacy by encrypting the ClientHello message, thereby concealing sensitive information such as the Server Name Indication (SNI) and Application-Layer Protocol Negotiation (ALPN) list from passive observers.\n\n**Overview of ECH:**\n\nIn a standard TLS handshake, the ClientHello message is sent in plaintext, exposing details like the SNI, which reveals the specific server the client intends to communicate with. This can be exploited by on-path attackers to monitor or censor user activity. ECH addresses this vulnerability by encrypting the ClientHello message using a public key provided by the server, ensuring that only the intended server can decrypt and process the message.\n\n**Mechanism:**\n\n1. **ECH Configuration Advertisement:** Servers publish an ECH configuration containing a public key and associated metadata. This configuration is typically disseminated via DNS records, allowing clients to retrieve the necessary information to encrypt their ClientHello messages.\n\n2. **ClientHello Construction:**\n   - **ClientHelloInner:** The client creates a ClientHelloInner containing the actual sensitive information, including the true SNI and ALPN list.\n   - **ClientHelloOuter:** The client then constructs a ClientHelloOuter with innocuous values for sensitive fields and includes an \"encrypted_client_hello\" extension carrying the encrypted ClientHelloInner.\n\n3. **Server Processing:**\n   - **ECH Acceptance:** If the server supports ECH and successfully decrypts the ClientHelloInner, it proceeds with the handshake using the inner message, thereby preserving the client's privacy.\n   - **ECH Rejection:** If the server does not support ECH or cannot decrypt the ClientHelloInner, it continues the handshake with the ClientHelloOuter, which contains non-sensitive information.\n\n**Security and Privacy Goals:**\n\nThe primary objective of ECH is to ensure that connections to servers within the same anonymity set are indistinguishable from one another, thereby preventing passive observers from determining the specific server a client is accessing. This is achieved without compromising the existing security properties of TLS 1.3.\n\n**Implementation Considerations:**\n\n- **Client Behavior:** Clients should be prepared to handle scenarios where ECH is not supported or is rejected by the server. In such cases, clients may need to retry the connection without ECH or with updated configurations.\n\n- **Server Behavior:** Servers need to manage ECH configurations effectively and be capable of processing both encrypted and unencrypted ClientHello messages. They should also provide mechanisms to update and distribute ECH configurations securely.\n\nFor a comprehensive understanding of the ECH extension, including detailed technical specifications and implementation guidelines, refer to the full Internet-Draft \"draft-ietf-tls-esni-17.\" "
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "6",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "9",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "9.1",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "9.5",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1.1"
+    },
+    "document_type": "EXTERNAL",
+    "document_tag": "draft-ietf-tls-esni-17",
+    "reference_type": "TEXT",
+    "reference_value": "TLS Encrypted Client Hello",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": "The \"TLS Encrypted Client Hello\" (ECH) is a proposed extension to the Transport Layer Security (TLS) protocol, detailed in the Internet-Draft \"draft-ietf-tls-esni-17.\" This extension aims to enhance user privacy by encrypting the ClientHello message, thereby concealing sensitive information such as the Server Name Indication (SNI) and Application-Layer Protocol Negotiation (ALPN) list from passive observers.\n\n**Overview of ECH:**\n\nIn a standard TLS handshake, the ClientHello message is sent in plaintext, exposing details like the SNI, which reveals the specific server the client intends to communicate with. This can be exploited by on-path attackers to monitor or censor user activity. ECH addresses this vulnerability by encrypting the ClientHello message using a public key provided by the server, ensuring that only the intended server can decrypt and process the message.\n\n**Mechanism:**\n\n1. **ECH Configuration Advertisement:** Servers publish an ECH configuration containing a public key and associated metadata. This configuration is typically disseminated via DNS records, allowing clients to retrieve the necessary information to encrypt their ClientHello messages.\n\n2. **ClientHello Construction:**\n   - **ClientHelloInner:** The client creates a ClientHelloInner containing the actual sensitive information, including the true SNI and ALPN list.\n   - **ClientHelloOuter:** The client then constructs a ClientHelloOuter with innocuous values for sensitive fields and includes an \"encrypted_client_hello\" extension carrying the encrypted ClientHelloInner.\n\n3. **Server Processing:**\n   - **ECH Acceptance:** If the server supports ECH and successfully decrypts the ClientHelloInner, it proceeds with the handshake using the inner message, thereby preserving the client's privacy.\n   - **ECH Rejection:** If the server does not support ECH or cannot decrypt the ClientHelloInner, it continues the handshake with the ClientHelloOuter, which contains non-sensitive information.\n\n**Security and Privacy Goals:**\n\nThe primary objective of ECH is to ensure that connections to servers within the same anonymity set are indistinguishable from one another, thereby preventing passive observers from determining the specific server a client is accessing. This is achieved without compromising the existing security properties of TLS 1.3.\n\n**Implementation Considerations:**\n\n- **Client Behavior:** Clients should be prepared to handle scenarios where ECH is not supported or is rejected by the server. In such cases, clients may need to retry the connection without ECH or with updated configurations.\n\n- **Server Behavior:** Servers need to manage ECH configurations effectively and be capable of processing both encrypted and unencrypted ClientHello messages. They should also provide mechanisms to update and distribute ECH configurations securely.\n\nFor a comprehensive understanding of the ECH extension, including detailed technical specifications and implementation guidelines, refer to the full Internet-Draft \"draft-ietf-tls-esni-17.\" "
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "6",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.4.2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.4.3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.4.1",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.1",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "4.2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "4.1",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "7",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "1.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "9",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "6",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "9",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "7",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "1035",
+    "reference_type": "SECTION",
+    "reference_value": "5.1",
+    "importance": "normative",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "1035",
+    "reference_type": "SECTION",
+    "reference_value": "3.2.4",
+    "importance": "normative",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "5.1",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "14.3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "1035",
+    "reference_type": "SECTION",
+    "reference_value": "3.1",
+    "importance": "normative",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "14.3.2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "11",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "3986",
+    "reference_type": "SECTION",
+    "reference_value": "3.2.3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "9.1",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "3.2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "4",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "10",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "1034",
+    "reference_type": "SECTION",
+    "reference_value": "3.6.2",
+    "importance": "normative",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "5.1",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.4.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.4.2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.4.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.4.3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.4.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "1912",
+    "reference_type": "SECTION",
+    "reference_value": "2.4",
+    "importance": "informative",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "2.4.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "6",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "1",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "3.1",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "8",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "5",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "3.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "7231",
+    "reference_type": "SECTION",
+    "reference_value": "4.3.6",
+    "importance": "normative",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "4.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "4.4",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "4.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "4.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.4.2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "4.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "5.2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "4.2.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "6147",
+    "reference_type": "SECTION",
+    "reference_value": "5.1.7",
+    "importance": "normative",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "4.2.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "4.2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "4.2.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "7.3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "4.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "3225",
+    "reference_type": "SECTION",
+    "reference_value": "1",
+    "importance": "normative",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "4.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "2181",
+    "reference_type": "SECTION",
+    "reference_value": "5.4.1",
+    "importance": "normative",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "4.4"
+    },
+    "document_type": "RFC",
+    "document_tag": "7871",
+    "reference_type": "SECTION",
+    "reference_value": "7.3.1",
+    "importance": "normative",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "4.4"
+    },
+    "document_type": "RFC",
+    "document_tag": "7871",
+    "reference_type": "SECTION",
+    "reference_value": "7.2.1",
+    "importance": "normative",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "4.4"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "10.2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "5"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "10.2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "5.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "5.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "4.2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "5.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "6"
+    },
+    "document_type": "RFC",
+    "document_tag": "1035",
+    "reference_type": "SECTION",
+    "reference_value": "2.3.1",
+    "importance": "normative",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "6"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.4.2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "6"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "9",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "7.1.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.4.3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "7.1.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "1",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "7.1.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "7.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "7.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "A.1",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "7.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "4",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "7.4"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "8",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "8"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "8"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.1",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "8"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.4.3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "7",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "8",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9"
+    },
+    "document_type": "EXTERNAL",
+    "document_tag": "WHATWG.FETCH",
+    "reference_type": "TEXT",
+    "reference_value": "Fetch Living Standard",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": "The Fetch Living Standard, maintained by the WHATWG, defines the process of fetching resources on the web, encompassing requests, responses, and the mechanisms that connect them. Its primary goal is to unify resource retrieval across the web platform, ensuring consistent handling of various aspects such as URL schemes, redirects, cross-origin semantics, Content Security Policy (CSP), Fetch Metadata, service workers, mixed content, and the `Referer` header. ([fetch.spec.whatwg.org](https://fetch.spec.whatwg.org/?utm_source=openai))\n\nThe standard also introduces the `fetch()` JavaScript API, providing a low-level interface for network operations. This API is designed to offer a unified architecture for resource fetching, aligning the behavior of different web APIs like HTML's `img` and `script` elements, CSS's `cursor` and `list-style-image`, and JavaScript methods such as `navigator.sendBeacon()` and `self.importScripts()`. ([fetch.spec.whatwg.org](https://fetch.spec.whatwg.org/?utm_source=openai))\n\nBy standardizing these processes, the Fetch Standard aims to provide a consistent and reliable framework for resource retrieval, enhancing interoperability and security across the web. "
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "9.5",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.4.2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "9.5",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.2.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "7.1.2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.3"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.4",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.4"
+    },
+    "document_type": "EXTERNAL",
+    "document_tag": "draft-ietf-tls-esni-17",
+    "reference_type": "TEXT",
+    "reference_value": "TLS Encrypted Client Hello",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": "The \"TLS Encrypted Client Hello\" (ECH) is a proposed extension to the Transport Layer Security (TLS) protocol, detailed in the Internet-Draft \"draft-ietf-tls-esni-17.\" This extension aims to enhance user privacy by encrypting the ClientHello message, thereby concealing sensitive information such as the Server Name Indication (SNI) and Application-Layer Protocol Negotiation (ALPN) list from passive observers.\n\n**Overview of ECH:**\n\nIn a standard TLS handshake, the ClientHello message is sent in plaintext, exposing details like the SNI, which reveals the specific server the client intends to communicate with. This can be exploited by on-path attackers to monitor or censor user activity. ECH addresses this vulnerability by encrypting the ClientHello message using a public key provided by the server, ensuring that only the intended server can decrypt and process the message.\n\n**Mechanism:**\n\n1. **ECH Configuration Advertisement:** Servers publish an ECH configuration containing a public key and associated metadata. This configuration is typically disseminated via DNS records, allowing clients to retrieve the necessary information to encrypt their ClientHello messages.\n\n2. **ClientHello Construction:**\n   - **ClientHelloInner:** The client creates a ClientHelloInner containing the actual sensitive information, including the true SNI and ALPN list.\n   - **ClientHelloOuter:** The client then constructs a ClientHelloOuter with innocuous values for sensitive fields and includes an \"encrypted_client_hello\" extension carrying the encrypted ClientHelloInner.\n\n3. **Server Processing:**\n   - **ECH Acceptance:** If the server supports ECH and successfully decrypts the ClientHelloInner, it proceeds with the handshake using the inner message, thereby preserving the client's privacy.\n   - **ECH Rejection:** If the server does not support ECH or cannot decrypt the ClientHelloInner, it continues the handshake with the ClientHelloOuter, which contains non-sensitive information.\n\n**Security and Privacy Goals:**\n\nThe primary objective of ECH is to ensure that connections to servers within the same anonymity set are indistinguishable from one another, thereby preventing passive observers from determining the specific server a client is accessing. This is achieved without compromising the existing security properties of TLS 1.3.\n\n**Implementation Considerations:**\n\n- **Client Behavior:** Clients should be prepared to handle scenarios where ECH is not supported or is rejected by the server. In such cases, clients may need to retry the connection without ECH or with updated configurations.\n\n- **Server Behavior:** Servers need to manage ECH configurations effectively and be capable of processing both encrypted and unencrypted ClientHello messages. They should also provide mechanisms to update and distribute ECH configurations securely.\n\nFor a comprehensive understanding of the ECH extension, including detailed technical specifications and implementation guidelines, refer to the full Internet-Draft \"draft-ietf-tls-esni-17.\" "
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.5"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "1",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.5"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.5"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.5"
+    },
+    "document_type": "RFC",
+    "document_tag": "6797",
+    "reference_type": "SECTION",
+    "reference_value": "8.3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.5"
+    },
+    "document_type": "EXTERNAL",
+    "document_tag": "HSTS",
+    "reference_type": "TEXT",
+    "reference_value": "HTTP Strict Transport Security",
+    "importance": "informative",
+    "updates": false,
+    "url": "./rfc6797",
+    "reference_text": "Hodges, J., Jackson, C., and A. Barth, \"HTTP Strict Transport Security (HSTS)\", RFC 6797, DOI 10.17487/RFC6797, November 2012, <https://www.rfc-editor.org/info/rfc6797>.",
+    "reference_summary": "HTTP Strict Transport Security (HSTS) is a web security policy mechanism defined in RFC 6797 that allows web servers to declare themselves accessible only via secure connections. This policy is communicated to user agents (UAs), such as web browsers, through the `Strict-Transport-Security` HTTP response header field. By implementing HSTS, web servers instruct UAs to:\n\n1. Automatically upgrade all HTTP requests to HTTPS for the specified domain.\n2. Terminate any connection attempts that encounter certificate errors or warnings without user intervention.\n\nThe primary goal of HSTS is to protect users from passive eavesdropping and active man-in-the-middle attacks by ensuring that all communications with the specified domain are encrypted. This is particularly important for safeguarding sensitive information, such as authentication credentials and personal data.\n\nTo implement HSTS, a web server includes the `Strict-Transport-Security` header in its HTTPS responses. This header can specify directives such as `max-age`, which defines the duration (in seconds) that the UA should enforce the HSTS policy, and `includeSubDomains`, which indicates that the policy applies to all subdomains of the host. For example:\n\n```\nStrict-Transport-Security: max-age=31536000; includeSubDomains\n```\n\nThis header informs the UA to enforce HTTPS-only communication with the domain and its subdomains for the next year (31,536,000 seconds).\n\nIt's important to note that HSTS is effective only after the UA has received the header over a secure connection. Therefore, the initial request to the server must be made over HTTPS, or the server should redirect HTTP requests to HTTPS to establish the HSTS policy.\n\nBy adopting HSTS, web servers can significantly enhance the security of their users by ensuring that all interactions are conducted over secure channels, thereby mitigating various web-based attacks. "
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.5"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "8",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.5"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.4",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.5"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "1.1",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.6"
+    },
+    "document_type": "RFC",
+    "document_tag": "9110",
+    "reference_type": "SECTION",
+    "reference_value": "4.2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.6"
+    },
+    "document_type": "EXTERNAL",
+    "document_tag": "HTTP",
+    "reference_type": "TEXT",
+    "reference_value": "HTTP Semantics",
+    "importance": "normative",
+    "updates": false,
+    "url": "./rfc9110",
+    "reference_text": "Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke, Ed., \"HTTP Semantics\", STD 97, RFC 9110, DOI 10.17487/RFC9110, June 2022, <https://www.rfc-editor.org/info/rfc9110>.",
+    "reference_summary": "RFC 9110, titled \"HTTP Semantics,\" is an Internet Standard published in June 2022 that defines the core semantics of the Hypertext Transfer Protocol (HTTP). This document outlines the overall architecture of HTTP, establishes common terminology, and specifies aspects of the protocol shared across all versions. It encompasses core protocol elements, extensibility mechanisms, and the \"http\" and \"https\" Uniform Resource Identifier (URI) schemes. ([rfc-editor.org](https://www.rfc-editor.org/rfc/rfc9110?utm_source=openai))\n\nThis standard updates RFC 3864 and obsoletes several previous RFCs, including RFCs 2818, 7230, 7231, 7232, 7233, 7235, 7538, 7615, 7694, and portions of 7230. ([rfc-editor.org](https://www.rfc-editor.org/rfc/rfc9110?utm_source=openai))\n\nThe document is authored by R. Fielding, M. Nottingham, and J. Reschke, and is part of the IETF's HTTP Working Group efforts. ([rfc-editor.org](https://www.rfc-editor.org/rfc/rfc9110?utm_source=openai))\n\nFor a comprehensive understanding of HTTP semantics as defined in RFC 9110, you can refer to the full document available at the RFC Editor's website. ([rfc-editor.org](https://www.rfc-editor.org/rfc/rfc9110?utm_source=openai)) "
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.6"
+    },
+    "document_type": "EXTERNAL",
+    "document_tag": "FETCH-WEBSOCKETS",
+    "reference_type": "TEXT",
+    "reference_value": "WebSockets Living Standard",
+    "importance": "informative",
+    "updates": false,
+    "url": "https://websockets.spec.whatwg.org/",
+    "reference_text": "WHATWG, \"WebSockets Living Standard\", September 2023, <https://websockets.spec.whatwg.org/>.",
+    "reference_summary": "The WebSockets Living Standard, maintained by the WHATWG, provides APIs that enable web applications to establish and maintain bidirectional communications with server-side processes. This specification introduces the `WebSocket` interface, allowing for real-time data exchange between clients and servers. \n\nThe standard outlines the process for establishing a WebSocket connection, which involves:\n\n1. **Connections**: Defining the steps to obtain a WebSocket connection, including parsing the URL to extract the host, port, and resource name, and determining whether the connection should be secure based on the URL's scheme.\n\n2. **Opening Handshake**: Detailing the procedure for initiating the WebSocket connection, which includes creating an HTTP request with specific headers (`Upgrade: websocket`, `Connection: Upgrade`, `Sec-WebSocket-Key`, and `Sec-WebSocket-Version`), and handling the server's response to establish the connection.\n\nThe `WebSocket` interface is defined with several attributes and methods:\n\n- **Attributes**:\n  - `url`: The URL used to establish the WebSocket connection.\n  - `readyState`: The current state of the connection, which can be `CONNECTING` (0), `OPEN` (1), `CLOSING` (2), or `CLOSED` (3).\n  - `bufferedAmount`: The number of bytes of data that have been queued using `send()` but not yet transmitted to the network.\n  - `extensions`: The extensions selected by the server, if any.\n  - `protocol`: The subprotocol selected by the server, if any.\n  - `binaryType`: Indicates how binary data is exposed to scripts, with possible values `\"blob\"` or `\"arraybuffer\"`.\n\n- **Methods**:\n  - `send(data)`: Transmits data using the WebSocket connection. The `data` parameter can be a string, `Blob`, `ArrayBuffer`, or `ArrayBufferView`.\n  - `close([code], [reason])`: Closes the WebSocket connection, optionally providing a status code and reason.\n\nThe standard also specifies how the WebSocket API integrates with the Fetch standard to handle protocols like Content Security Policy (CSP), cookies, and HTTP Strict Transport Security (HSTS) in a unified manner. Additionally, it addresses aspects such as handling ping and pong frames for keep-alive and latency measurement, and the `CloseEvent` interface, which provides information about the reason a WebSocket connection was closed.\n\nFor more detailed information, you can refer to the full specification at the provided URL. "
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "9.6"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "9.5",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "10.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2.3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "10.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "5",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "10.3"
+    },
+    "document_type": "EXTERNAL",
+    "document_tag": "BIND-CHECK-NAMES",
+    "reference_type": "TEXT",
+    "reference_value": "check-names",
+    "importance": "informative",
+    "updates": false,
+    "url": "https://bind9.readthedocs.io/en/v9.19.11/",
+    "reference_text": "Internet Systems Consortium, \"BIND v9.19.11 Configuration Reference: \"check-names\"\", September 2023, <https://bind9.readthedocs.io/en/v9.19.11/ reference.html#namedconf-statement-check-names >.",
+    "reference_summary": "The \"check-names\" statement in BIND 9.19.11 is used to enforce compliance with standard naming conventions for domain names within the DNS. It allows administrators to specify how strictly BIND should check the syntax of domain names in different contexts: master zones, slave zones, and responses.\n\nThe syntax for the \"check-names\" statement is as follows:\n\n```\ncheck-names ( master | slave | response ) ( warn | fail | ignore );\n```\n\nWhere:\n\n- `master`, `slave`, or `response` specifies the context in which the checks are applied.\n- `warn`, `fail`, or `ignore` determines the action BIND takes when a non-compliant name is encountered:\n  - `warn`: Logs a warning message but allows the name.\n  - `fail`: Logs an error message and rejects the name.\n  - `ignore`: Disables the check for that context.\n\nBy default, BIND is configured with the following \"check-names\" settings:\n\n```\ncheck-names master fail;\ncheck-names slave warn;\ncheck-names response ignore;\n```\n\nThis means that BIND will reject non-compliant names in master zones, warn about them in slave zones, and ignore them in responses.\n\nAdministrators can adjust these settings in the `named.conf` configuration file to suit their specific requirements. "
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "11"
+    },
+    "document_type": "RFC",
+    "document_tag": "6066",
+    "reference_type": "SECTION",
+    "reference_value": "8",
+    "importance": "normative",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "11"
+    },
+    "document_type": "EXTERNAL",
+    "document_tag": "Attrleaf",
+    "reference_type": "TEXT",
+    "reference_value": "Underscored and Globally Scoped DNS Node Names",
+    "importance": "normative",
+    "updates": false,
+    "url": "./bcp222",
+    "reference_text": "Crocker, D., \"Scoped Interpretation of DNS Resource Records through \"Underscored\" Naming of Attribute Leaves\",BCP 222, RFC 8552, DOI 10.17487/RFC8552, March 2019, <https://www.rfc-editor.org/info/rfc8552>.",
+    "reference_summary": "RFC 8552, titled \"Scoped Interpretation of DNS Resource Records through 'Underscored' Naming of Attribute Leaves,\" introduces a convention in the Domain Name System (DNS) where node names beginning with an underscore character (e.g., \"_name\") are used to define specific interpretations of resource records (RRs) associated with a parent domain. This approach allows for the scoping of DNS RRs, providing a structured method to associate certain records with particular services or attributes of a domain.\n\n**Underscored Node Names:**\nUnderscored node names serve as a mechanism to scope DNS RRs by creating a subordinate branch under a parent domain. This branch is identified by a node name that starts with an underscore, distinguishing it from standard hostnames, as the underscore character is not permitted in traditional hostnames. This naming convention effectively creates a namespace for attributes related to the parent domain. For example, in DomainKeys Identified Mail (DKIM), the \"_domainkey\" node is used to store TXT records containing signing information for the parent domain. ([rfc-editor.org](https://www.rfc-editor.org/rfc/rfc8552?utm_source=openai))\n\n**Globally Scoped DNS Node Names:**\nA globally scoped underscored node name is the highest-level underscored name in a domain's hierarchy, closest to the DNS root. These global names are registered in the \"Underscored and Globally Scoped DNS Node Names\" registry maintained by IANA to prevent naming collisions. For instance, in the domain \"_service._tcp.example.com,\" \"_service\" is the global underscored node name. The registry ensures that each global underscored node name is unique and associated with specific RR types, facilitating organized and collision-free use of underscored names in DNS. ([rfc-editor.org](https://www.rfc-editor.org/rfc/rfc8552?utm_source=openai))\n\nBy implementing this structured approach, RFC 8552 aims to enhance the scalability and manageability of DNS records, particularly when using generalized RR types like TXT, SRV, and URI. It provides a clear framework for associating specific records with particular services or attributes, thereby improving the efficiency and clarity of DNS operations. "
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "A"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "5.1",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "B"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "9",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "C.2"
+    },
+    "document_type": "EXTERNAL",
+    "document_tag": "HTTP-DNS-RR",
+    "reference_type": "TEXT",
+    "reference_value": "A DNS Resource Record for HTTP",
+    "importance": "informative",
+    "updates": false,
+    "url": "./draft-bellis-dnsop-http-record",
+    "reference_text": "Bellis, R., \"A DNS Resource Record for HTTP\", Work in Progress, Internet-Draft, draft-bellis-dnsop-http-record- 00, 3 November 2018, <https://datatracker.ietf.org/doc/html/draft-bellis-dnsop- http-record-00>.",
+    "reference_summary": "The document \"A DNS Resource Record for HTTP\" by Ray Bellis introduces a new DNS resource record (RR) type named \"HTTP\" to facilitate the resolution of HTTP and HTTPS URIs. This proposal aims to address limitations associated with the use of CNAME records for HTTP services, particularly the inability to place CNAME records at the apex of a domain.\n\n**Key Points:**\n\n- **Purpose:** The HTTP RR is designed to map the domain name in an HTTP(S) URI to the actual server hostname hosting the content. This approach seeks to replace CNAME records in this context and resolve issues like the restriction against placing CNAME records at a domain's apex.\n\n- **Record Structure:**\n  - **Owner Name:** Represents the domain name from the HTTP(S) URI.\n  - **RDATA:** Contains the target hostname in uncompressed wire format.\n\n- **Operational Details:**\n  - **Recursive Resolvers:** Upon receiving a query for an HTTP RR, they may proactively fetch the corresponding A and AAAA records for the target hostname and include them in the Additional Section of the DNS response.\n  - **Clients:** Clients should perform parallel DNS queries for A, AAAA, and HTTP records. If an HTTP RR is returned, clients should use the provided A and AAAA records or query for them if not included, to establish connections to the server.\n\nBy implementing the HTTP RR, the proposal aims to streamline the process of resolving HTTP(S) URIs, offering a more efficient and flexible alternative to existing methods. "
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "C.3"
+    },
+    "document_type": "EXTERNAL",
+    "document_tag": "ANAME-DNS-RR",
+    "reference_type": "TEXT",
+    "reference_value": "Address-specific DNS aliases",
+    "importance": "informative",
+    "updates": false,
+    "url": "./draft-ietf-dnsop-aname-04",
+    "reference_text": "Finch, T., Hunt, E., van Dijk, P., Eden, A., and W. Mekking, \"Address-specific DNS aliases (ANAME)\", Work in Progress, Internet-Draft, draft-ietf-dnsop-aname-04, 8 July 2019, <https://datatracker.ietf.org/doc/html/draft- ietf-dnsop-aname-04>.",
+    "reference_summary": "The document \"Address-specific DNS aliases (ANAME)\" defines the ANAME DNS resource record (RR) type, designed to provide functionality similar to CNAME records but specifically for address queries (A and AAAA records). Unlike CNAME records, which cannot coexist with other record types at the same DNS node, ANAME records are intended to coexist with other records, including at the zone apex. ([datatracker.ietf.org](https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-aname-04?utm_source=openai))\n\nThe primary motivation for introducing ANAME records is to enable domain owners to alias the apex of their domain to another domain name in a standards-compliant manner. This is particularly useful for scenarios where the apex domain needs to point to a content delivery network (CDN) or other service that provides dynamic IP addresses. Traditional CNAME records are not permitted at the zone apex because they cannot coexist with SOA and NS records, leading to operational challenges. ([datatracker.ietf.org](https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-aname-04?utm_source=openai))\n\nANAME records address this limitation by allowing the aliasing of the apex domain for address queries while maintaining compatibility with other necessary records. The document specifies that authoritative DNS servers should automatically resolve the ANAME target's A and AAAA records and serve them alongside the ANAME record itself. This approach ensures that resolvers, including those unaware of ANAME, receive the correct address information without additional queries. ([datatracker.ietf.org](https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-aname-04?utm_source=openai))\n\nThe document also discusses operational considerations, such as the handling of zone transfers, DNSSEC implications, and TTL management, to ensure consistent and reliable behavior across different DNS implementations. ([datatracker.ietf.org](https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-aname-04?utm_source=openai))\n\nIn summary, ANAME records provide a standardized method for aliasing domain names, especially at the zone apex, facilitating more flexible and efficient DNS configurations. "
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "D"
+    },
+    "document_type": "RFC",
+    "document_tag": "3597",
+    "reference_type": "SECTION",
+    "reference_value": "1",
+    "importance": "normative",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "D.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "10",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "D.1"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "D.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "10",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "D.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "3",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "D.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "2",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "D.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "6",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "D.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "7",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "D.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "5",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  },
+  {
+    "source": {
+      "rfc_number": "9460",
+      "section_id": "D.2"
+    },
+    "document_type": "RFC",
+    "document_tag": "9460",
+    "reference_type": "SECTION",
+    "reference_value": "8",
+    "importance": "unknown",
+    "updates": false,
+    "url": "",
+    "reference_text": "",
+    "reference_summary": ""
+  }
+]

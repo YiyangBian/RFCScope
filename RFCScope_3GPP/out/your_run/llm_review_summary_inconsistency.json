@@ -1,0 +1,11 @@
+{
+  "task": "inconsistency",
+  "num_requested": 10,
+  "num_completed": 10,
+  "num_errors": 0,
+  "label_counts": {
+    "strong_inconsistency_candidate": 5,
+    "possible_inconsistency": 3,
+    "not_inconsistent": 2
+  }
+}

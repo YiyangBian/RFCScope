@@ -1,0 +1,525 @@
+[
+  {
+    "spec_id": "38.322",
+    "clause_id": "7.1",
+    "title": "State variables",
+    "level": 2,
+    "parent_clause_id": "7",
+    "children": [],
+    "clause_type": "supporting_semantics",
+    "tags": [
+      "implementation_defined",
+      "cross_clause_dependency",
+      "state_or_timer_dependency"
+    ],
+    "priority": "low",
+    "rule_score": 3.0,
+    "rule_signals": [
+      "Clause mentions timers/state/configuration concepts that may require explicit definitions.",
+      "Clause depends on other clauses/specifications for procedural detail.",
+      "Clause includes implementation-defined / implementation-latitude wording."
+    ],
+    "internal_refs": [
+      "5.3.2",
+      "5.3.3.2"
+    ],
+    "external_refs": [],
+    "referenced_clauses": [
+      {
+        "clause_id": "5.3.2",
+        "title": "Retransmission",
+        "text": "The transmitting side of an AM RLC entity can receive a negative acknowledgement (notification of reception failure\nby its peer AM RLC entity) for an RLC SDU or an RLC SDU segment by the following:\n- STATUS PDU from its peer AM RLC entity.\nWhen receiving a negative acknowledgement for an RLC SDU or an RLC SDU segment by a STATUS PDU from its\npeer AM RLC entity, the transmitting side of the AM RLC entity shall:\n- if the SN of the corresponding RLC SDU falls within the range TX_Next_Ack <= SN < = the highest SN of the\nAMD PDU among the AMD PDUs submitted to lower layer; and\n- if stopReTxDiscardedSDU is configured and no discard indication for the RLC SDU has been received from\nupper layer, or if stopReTxDiscardedSDU is not configured:\n- consider the RLC SDU or the RLC SDU segment for which a negative acknowledgement was received for\nretransmission.\nWhen receiving an indication from upper layer (e.g., PDCP) that the condition for remaining-time-based RLC\nretransmission has been met for an RLC SDU, the transmitting side of the AM RLC entity shall:\n- if the RLC SDU or the RLC SDU segment(s) thereof has been submitted to lower layers but has not been\npositively acknowledged:\n- consider t ...[TRUNCATED]"
+      },
+      {
+        "clause_id": "5.3.3.2",
+        "title": "Transmission of a AMD PDU",
+        "text": "Upon notification of a transmission opportunity by lower layer, for each AMD PDU submitted for transmission such\nthat the AMD PDU contains either a not previously transmitted RLC SDU or an RLC SDU segment containing not\npreviously transmitted byte segment, the transmitting side of an AM RLC entity shall:\n- increment PDU_WITHOUT_POLL by one;\n- increment BYTE_WITHOUT_POLL by every new byte of Data field element that it maps to the Data field of\nthe AMD PDU;\n- if PDU_WITHOUT_POLL >= pollPDU; or\n- if BYTE_WITHOUT_POLL >= pollByte:\n- include a poll in the AMD PDU as described below.\nUpon notification of a transmission opportunity by lower layer, for each AMD PDU submitted for transmission, the\ntransmitting side of an AM RLC entity shall:\n- if both the transmission buffer and the retransmission buffer becomes empty (excluding transmitted RLC SDUs\nor RLC SDU segments awaiting acknowledgements and excluding RLC SDUs or RLC SDU segments for which\nthe transmission and retransmission are stopped as specified in clause 5.2.3.1.1) after the transmission of the\nAMD PDU; or\n- if no new RLC SDU can be transmitted after the transmission of the AMD PDU (e.g. due to window stalling); or\n- if an indic ...[TRUNCATED]"
+      }
+    ],
+    "snippet": "This clause describes the state variables used in AM and UM entities in order to specify the RLC protocol. The state\nvariables defined in this clause are normative.\nAll state variables and all counters are non-negative integers.\nAll state variables related to AM data transfer can take values from 0 to 4095 for 12 bit S ...",
+    "full_text": "This clause describes the state variables used in AM and UM entities in order to specify the RLC protocol. The state\nvariables defined in this clause are normative.\nAll state variables and all counters are non-negative integers.\nAll state variables related to AM data transfer can take values from 0 to 4095 for 12 bit SN or from 0 to 262143 for 18\nbit SN. All arithmetic operations contained in the present document on state variables related to AM data transfer are\naffected by the AM modulus (i.e. final value = [value from arithmetic operation] modulo 4096 for 12 bit SN and\n262144 for 18 bit SN).\nAll state variables related to UM data transfer can take values from 0 to 63 for 6 bit SN or from 0 to 4095 for 12 bit SN.\nAll arithmetic operations contained in the present document on state variables related to UM data transfer are affected\nby the UM modulus (i.e. final value = [value from arithmetic operation] modulo 64 for 6 bit SN and 4096 for 12 bit\nSN).\nWhen performing arithmetic comparisons of state variables or SN values, a modulus base shall be used.\nTX_Next_Ack and RX_Next shall be assumed as the modulus base at the transmitting side and receiving side of an AM\nRLC entity, respectively. This modulus base is subtracted from all the values involved, and then an absolute comparison\nis performed (e.g. RX_Next <= SN < RX_Next + AM_Window_Size is evaluated as [RX_Next - RX_Next] modulo\n2\n[sn-FieldLength] <= [SN - RX_Next] modulo 2[sn-FieldLength] < [RX_Next + AM_Window_Size - RX_Next] modulo 2[snFieldLength]), where sn-FieldLength is 12 or 18 for 12 bit SN and 18 bit SN, respectively.\nRX_Next_Highest- UM_Window_Size shall be assumed as the modulus base at the receiving UM RLC entity. This\nmodulus base is subtracted from all the values involved, and then an absolute comparison is performed (e.g.\n(RX_Next_Highest- UM_Window_Size) <= SN < RX_Next_Highest is evaluated as [(RX_Next_Highest-\nUM_Window_Size) - (RX_Next_Highest- UM_Window_Size)] modulo 2\n[sn-FieldLength] <= [SN - (RX_Next_Highest-\nUM_Window_Size)] modulo 2[sn-FieldLength] < [RX_Next_Highest- (RX_Next_Highest- UM_Window_Size)] modulo\n2[sn-FieldLength]), where sn-FieldLength is 6 or 12 for 6 bit SN and 12 bit SN, respectively.\nThe transmitting side of each AM RLC entity shall maintain the following state variables:\na) TX_Next_Ack - Acknowledgement state variable\nThis state variable holds the value of the SN of the next RLC SDU for which a positive acknowledgment is to be\nreceived in-sequence, and it serves as the lower edge of the transmitting window. It is initially set to 0, and is updated\nwhenever the AM RLC entity receives a positive acknowledgment for an RLC SDU with SN = TX_Next_Ack.\nb) TX_Next - Send state variable\nThis state variable holds the value of the SN to be assigned for the next newly generated AMD PDU. It is initially set to\n0, and is updated whenever the AM RLC entity constructs an AMD PDU with SN = TX_Next and contains an RLC\nSDU or the last segment of a RLC SDU.\nc) POLL_SN - Poll send state variable\n\nThis state variable holds the value of the highest SN of the AMD PDU among the AMD PDUs submitted to lower layer\nwhen POLL_SN is set according to clause 5.3.3.2. It is initially set to 0.\nThe transmitting side of each AM RLC entity shall maintain the following counters:\na) PDU_WITHOUT_POLL - Counter\nThis counter is initially set to 0. It counts the number of AMD PDUs sent since the most recent poll bit was transmitted.\nb) BYTE_WITHOUT_POLL - Counter\nThis counter is initially set to 0. It counts the number of data bytes sent since the most recent poll bit was transmitted.\nc) RETX_COUNT - Counter\nThis counter counts the number of retransmissions of an RLC SDU or RLC SDU segment (see clause 5.3.2). There is\none RETX_COUNT counter maintained per RLC SDU. This counter is reset to zero for each RLC SDU when indicated\nby upper layer.\nThe receiving side of each AM RLC entity shall maintain the following state variables:\na) RX_Next - Receive state variable\nThis state variable holds the value of the SN following the last in-sequence completely received RLC SDU, and it\nserves as the lower edge of the receiving window. It is initially set to 0, and is updated whenever the AM RLC entity\nreceives an RLC SDU with SN = RX_Next.\nb) RX_Next_Status_Trigger - t-Reassembly state variable\nThis state variable holds the value of the SN following the SN of the RLC SDU which triggered t-Reassembly.\nc) RX_Highest_Status - Maximum STATUS transmit state variable\nThis state variable holds the highest possible value of the SN which can be indicated by \"ACK_SN\" when a STATUS\nPDU needs to be constructed. It is initially set to 0.\nd) RX_Next_Highest - Highest received state variable\nThis state variable holds the value of the SN following the SN of the RLC SDU with the highest SN among received\nRLC SDUs. It is initially set to 0.\ne) RX_Next_Discard_Trigger - t-RxDiscard state variable\nThis state variable holds the value of the SN following the SN of the RLC SDU which triggered t-RxDiscard. This state\nvariable shall be maintained only when the AM RLC entity is configured with t-RxDiscard.\nEach transmitting UM RLC entity shall maintain the following state variables:\na) TX_Next - UM send state variable\nThis state variable holds the value of the SN to be assigned for the next newly generated UMD PDU with segment. It is\ninitially set to 0, and is updated after the UM RLC entity submits a UMD PDU including the last segment of an RLC\nSDU to lower layers.\nEach receiving UM RLC entity shall maintain the following state variables:\na) RX_Next_Reassembly - UM receive state variable\nThis state variable holds the value of the earliest SN that is still considered for reassembly. It is initially set to 0. For\ngroupcast and broadcast of NR sidelink communication or for SL-SRB4 of NR sidelink discovery, it is initially set to\nthe SN of the first received UMD PDU containing an SN. For the receiving UM RLC entity configured for MCCH or\nMTCH, it is up to UE implementation to set the initial value of RX_Next_Reassembly to a value before\nRX_Next_Highest.\nb) RX_Timer_Trigger - UM t-Reassembly state variable\nThis state variable holds the value of the SN following the SN which triggered t-Reassembly.\n\nc) RX_Next_Highest- UM receive state variable\nThis state variable holds the value of the SN following the SN of the UMD PDU with the highest SN among received\nUMD PDUs. It serves as the higher edge of the reassembly window. It is initially set to 0. For groupcast and broadcast\nof NR sidelink communication or for SL-SRB4 of NR sidelink discovery, it is initially set to the SN of the first received\nUMD PDU containing an SN. For the receiving UM RLC entity configured for MCCH or MTCH, it is initially set to\nthe SN of the first received UMD PDU containing an SN."
+  },
+  {
+    "spec_id": "38.322",
+    "clause_id": "5.2.2.2.1",
+    "title": "General",
+    "level": 5,
+    "parent_clause_id": "5.2.2.2",
+    "children": [],
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency",
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 2.5,
+    "rule_signals": [
+      "Clause mentions timers/state/configuration concepts that may require explicit definitions.",
+      "Clause depends on other clauses/specifications for procedural detail.",
+      "Clause contains potentially vague qualifiers."
+    ],
+    "internal_refs": [
+      "5.2.2.2.2",
+      "5.2.2.2.3",
+      "5.2.2.2.4"
+    ],
+    "external_refs": [],
+    "referenced_clauses": [
+      {
+        "clause_id": "5.2.2.2.2",
+        "title": "Actions when an UMD PDU is received from lower layer",
+        "text": "When an UMD PDU is received from lower layer, the receiving UM RLC entity shall:\n- if the UMD PDU header does not contain an SN:\n- remove the RLC header and deliver the RLC SDU to upper layer.\n- else if (RX_Next_Highest - UM_Window_Size) <= SN < RX_Next_Reassembly:\n- discard the received UMD PDU.\n- else:\n- place the received UMD PDU in the reception buffer."
+      },
+      {
+        "clause_id": "5.2.2.2.3",
+        "title": "Actions when an UMD PDU is placed in the reception buffer",
+        "text": "When an UMD PDU with SN = x is placed in the reception buffer, the receiving UM RLC entity shall:\n- if all byte segments with SN = x are received:\n- reassemble the RLC SDU from all byte segments with SN = x, remove RLC headers and deliver the\nreassembled RLC SDU to upper layer;\n- if x = RX_Next_Reassembly:\n- update RX_Next_Reassembly to the SN of the first SN > current RX_Next_Reassembly that has not been\nreassembled and delivered to upper layer.\n- else if x falls outside of the reassembly window:\n- update RX_Next_Highest to x + 1;\n- discard any UMD PDUs with SN that falls outside of the reassembly window;\n- if RX_Next_Reassembly falls outside of the reassembly window:\n- set RX_Next_Reassembly to the SN of the first SN >= (RX_Next_Highest - UM_Window_Size) that has\nnot been reassembled and delivered to upper layer.\n- if t-Reassembly is running:\n- if RX_Timer_Trigger <= RX_Next_Reassembly; or\n- if RX_Timer_Trigger falls outside of the reassembly window and RX_Timer_Trigger is not equal to\nRX_Next_Highest; or\n- if RX_Next_Highest = RX_Next_Reassembly + 1 and there is no missing byte segment of the RLC SDU\nassociated with SN = RX_Next_Reassembly before the last byte of all received se ...[TRUNCATED]"
+      },
+      {
+        "clause_id": "5.2.2.2.4",
+        "title": "Actions when t-Reassembly expires",
+        "text": "When t-Reassembly expires, the receiving UM RLC entity shall:\n- update RX_Next_Reassembly to the SN of the first SN >= RX_Timer_Trigger that has not been reassembled;\n- discard all segments with SN < updated RX_Next_Reassembly;\n- if RX_Next_Highest > RX_Next_Reassembly + 1; or\n- if RX_Next_Highest = RX_Next_Reassembly + 1 and there is at least one missing byte segment of the RLC\nSDU associated with SN = RX_Next_Reassembly before the last byte of all received segments of this RLC\nSDU:\n- start t-Reassembly;\n- set RX_Timer_Trigger to RX_Next_Highest."
+      }
+    ],
+    "snippet": "The receiving UM RLC entity shall maintain a reassembly window according to state variable RX_Next_Highest as\nfollows:\n- a SN falls within the reassembly window if (RX_Next_Highest - UM_Window_Size) <= SN\n<RX_Next_Highest;\n- a SN falls outside of the reassembly window otherwise.\nWhen receiving an UMD PDU from lower lay ...",
+    "full_text": "The receiving UM RLC entity shall maintain a reassembly window according to state variable RX_Next_Highest as\nfollows:\n- a SN falls within the reassembly window if (RX_Next_Highest - UM_Window_Size) <= SN\n<RX_Next_Highest;\n- a SN falls outside of the reassembly window otherwise.\nWhen receiving an UMD PDU from lower layer, the receiving UM RLC entity shall:\n- either deliver the UMD PDU to upper layer after removing the RLC header, discard the received UMD PDU, or\nplace it in the reception buffer (see clause 5.2.2.2.2);\n- if the received UMD PDU was placed in the reception buffer:\n- update state variables, reassemble and deliver RLC SDUs to upper layer and start/stop t-Reassembly as\nneeded (see clause 5.2.2.2.3).\nWhen t-Reassembly expires, the receiving UM RLC entity shall:\n- update state variables, discard RLC SDU segments and start t-Reassembly as needed (see clause 5.2.2.2.4)."
+  },
+  {
+    "spec_id": "38.322",
+    "clause_id": "5.2.3.2.1",
+    "title": "General",
+    "level": 5,
+    "parent_clause_id": "5.2.3.2",
+    "children": [],
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency",
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 2.5,
+    "rule_signals": [
+      "Clause mentions timers/state/configuration concepts that may require explicit definitions.",
+      "Clause depends on other clauses/specifications for procedural detail.",
+      "Clause contains potentially vague qualifiers."
+    ],
+    "internal_refs": [
+      "5.2.3.2.2",
+      "5.2.3.2.3",
+      "5.2.3.2.4",
+      "5.2.3.2.5"
+    ],
+    "external_refs": [],
+    "referenced_clauses": [
+      {
+        "clause_id": "5.2.3.2.2",
+        "title": "Actions when an AMD PDU is received from lower layer",
+        "text": "When an AMD PDU is received from lower layer, where the AMD PDU contains byte segment numbers y to z of an\nRLC SDU with SN = x, the receiving side of an AM RLC entity shall:\n- if x falls outside of the receiving window; or\n- if byte segment numbers y to z of the RLC SDU with SN = x have been received before:\n- discard the received AMD PDU.\n- else:\n- place the received AMD PDU in the reception buffer;\n- if some byte segments of the RLC SDU contained in the AMD PDU have been received before:\n- discard the duplicate byte segments."
+      },
+      {
+        "clause_id": "5.2.3.2.3",
+        "title": "Actions when an AMD PDU is placed in the reception buffer",
+        "text": "When an AMD PDU with SN = x is placed in the reception buffer, the receiving side of an AM RLC entity shall:\n- if x >= RX_Next_Highest:\n- update RX_Next_Highest to x+ 1.\n- if all bytes of the RLC SDU with SN = x are received:\n- reassemble the RLC SDU from AMD PDU(s) with SN = x, remove RLC headers when doing so and deliver\nthe reassembled RLC SDU to upper layer;\n- if x = RX_Highest_Status:\n- update RX_Highest_Status to the SN of the first RLC SDU with SN > current RX_Highest_Status for\nwhich not all bytes have been received.\n- if x = RX_Next:\n- update RX_Next to the SN of the first RLC SDU with SN > current RX_Next for which not all bytes\nhave been received.\n- if t-Reassembly is running:\n- if RX_Next_Status_Trigger = RX_Next; or\n- if RX_Next_Status_Trigger = RX_Next + 1 and there is no missing byte segment of the SDU associated with\nSN = RX_Next before the last byte of all received segments of this SDU; or\n\n- if RX_Next_Status_Trigger falls outside of the receiving window and RX_Next_Status_Trigger is not equal\nto RX_Next + AM_Window_Size:\n- stop and reset t-Reassembly .\n- if t-Reassembly is not running (includes the case t-Reassembly is stopped due to actions above):\n- if RX_Next_ ...[TRUNCATED]"
+      },
+      {
+        "clause_id": "5.2.3.2.4",
+        "title": "Actions when t-Reassembly expires",
+        "text": "When t-Reassembly expires, the receiving side of an AM RLC entity shall:\n- update RX_Highest_Status to the SN of the first RLC SDU with SN >= RX_Next_Status_Trigger for which not\nall bytes have been received;\n- if RX_Next_Highest> RX_Highest_Status +1: or\n- if RX_Next_Highest = RX_Highest_Status + 1 and there is at least one missing byte segment of the SDU\nassociated with SN = RX_Highest_Status before the last byte of all received segments of this SDU:\n- start t-Reassembly;\n- set RX_Next_Status_Trigger to RX_Next_Highest."
+      }
+    ],
+    "snippet": "The receiving side of an AM RLC entity shall maintain a receiving window according to the state variable RX_Next as\nfollows:\n- a SN falls within the receiving window if RX_Next <= SN < RX_Next + AM_Window_Size;\n- a SN falls outside of the receiving window otherwise.\n\nWhen receiving an AMD PDU from lower layer, the rece ...",
+    "full_text": "The receiving side of an AM RLC entity shall maintain a receiving window according to the state variable RX_Next as\nfollows:\n- a SN falls within the receiving window if RX_Next <= SN < RX_Next + AM_Window_Size;\n- a SN falls outside of the receiving window otherwise.\n\nWhen receiving an AMD PDU from lower layer, the receiving side of an AM RLC entity shall:\n- either discard the received AMD PDU or place it in the reception buffer (see clause 5.2.3.2.2);\n- if the received AMD PDU was placed in the reception buffer:\n- update state variables, reassemble and deliver RLC SDUs to upper layer and start/stop t-Reassembly and tRxDiscard as needed (see clause 5.2.3.2.3).\nWhen t-Reassembly expires, the receiving side of an AM RLC entity shall:\n- update state variables and start t-Reassembly as needed (see clause 5.2.3.2.4).\nWhen t-RxDiscard expires, the receiving side of an AM RLC entity shall:\n- update state variables and start t-RxDiscard as needed (see clause 5.2.3.2.5)."
+  },
+  {
+    "spec_id": "38.322",
+    "clause_id": "5.3.2",
+    "title": "Retransmission",
+    "level": 3,
+    "parent_clause_id": "5.3",
+    "children": [],
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency",
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 2.5,
+    "rule_signals": [
+      "Clause mentions timers/state/configuration concepts that may require explicit definitions.",
+      "Clause depends on other clauses/specifications for procedural detail.",
+      "Clause contains potentially vague qualifiers."
+    ],
+    "internal_refs": [
+      "5.3.3",
+      "6.2.2.4"
+    ],
+    "external_refs": [],
+    "referenced_clauses": [
+      {
+        "clause_id": "5.3.3",
+        "title": "Polling",
+        "text": ""
+      },
+      {
+        "clause_id": "6.2.2.4",
+        "title": "AMD PDU",
+        "text": "AMD PDU consists of a Data field and an AMD PDU header. The AMD PDU header is byte aligned.\nAn AM RLC entity is configured by RRC to use either a 12 bit SN or a 18 bit SN. The length of the AMD PDU header\nis two and three bytes respectively.\nAn AMD PDU header contains a D/C, a P, a SI, and a SN. An AMD PDU header contains the SO field only when the\nData field consists of an RLC SDU segment which is not the first segment, in which case a 16 bit SO is present.\nD/C P SI SN\nSN\nData\n...\nOct 3\nOct N\nOct 1\nOct 2\n\nFigure 6.2.2.4-1: AMD PDU with 12 bit SN (No SO)\n\nD/C P SI SN\nSN\nData\n...\nOct 3\nOct N\nOct 1\nOct 2\nSN\nR R\nOct 4\n\nFigure 6.2.2.4-2: AMD PDU with 18 bit SN (No SO)\nSO\nSO\nSN\nOct 3\nOct 4\nD/C P SI\nSN\nData\n...\nOct 5\nOct N\nOct 1\nOct 2\n\nFigure 6.2.2.4-3: AMD PDU with 12 bit SN with SO\nR\nSN\nSO\nSO\nOct 3\nOct 4\nD/C P SI SN\nSN\nData\n...\nOct 5\nOct N\nOct 1\nOct 2\nOct 6\nR\n\nFigure 6.2.2.4-4: AMD PDU with 18 bit SN with SO"
+      }
+    ],
+    "snippet": "The transmitting side of an AM RLC entity can receive a negative acknowledgement (notification of reception failure\nby its peer AM RLC entity) for an RLC SDU or an RLC SDU segment by the following:\n- STATUS PDU from its peer AM RLC entity.\nWhen receiving a negative acknowledgement for an RLC SDU or an RLC SDU segment b ...",
+    "full_text": "The transmitting side of an AM RLC entity can receive a negative acknowledgement (notification of reception failure\nby its peer AM RLC entity) for an RLC SDU or an RLC SDU segment by the following:\n- STATUS PDU from its peer AM RLC entity.\nWhen receiving a negative acknowledgement for an RLC SDU or an RLC SDU segment by a STATUS PDU from its\npeer AM RLC entity, the transmitting side of the AM RLC entity shall:\n- if the SN of the corresponding RLC SDU falls within the range TX_Next_Ack <= SN < = the highest SN of the\nAMD PDU among the AMD PDUs submitted to lower layer; and\n- if stopReTxDiscardedSDU is configured and no discard indication for the RLC SDU has been received from\nupper layer, or if stopReTxDiscardedSDU is not configured:\n- consider the RLC SDU or the RLC SDU segment for which a negative acknowledgement was received for\nretransmission.\nWhen receiving an indication from upper layer (e.g., PDCP) that the condition for remaining-time-based RLC\nretransmission has been met for an RLC SDU, the transmitting side of the AM RLC entity shall:\n- if the RLC SDU or the RLC SDU segment(s) thereof has been submitted to lower layers but has not been\npositively acknowledged:\n- consider the RLC SDU or the RLC SDU segment(s) for retransmission.\nWhen an RLC SDU or an RLC SDU segment is considered for retransmission, the transmitting side of the AM RLC\nentity shall:\n- if the RLC SDU or RLC SDU segment is considered for retransmission for the first time:\n- set the RETX_COUNT associated with the RLC SDU to zero.\n- else, if it (the RLC SDU or the RLC SDU segment that is considered for retransmission) is not pending for\nretransmission already and the RETX_COUNT associated with the RLC SDU has not been incremented due to\nanother negative acknowledgment in the same STATUS PDU:\n- increment the RETX_COUNT.\n- if RETX_COUNT = maxRetxThreshold:\n- indicate to upper layers that max retransmission has been reached.\nWhen retransmitting an RLC SDU or an RLC SDU segment, the transmitting side of an AM RLC entity shall:\n- if needed, segment the RLC SDU or the RLC SDU segment;\n- form a new AMD PDU which will fit within the total size of AMD PDU(s) indicated by lower layer at the\nparticular transmission opportunity;\n\n- submit the new AMD PDU to lower layer.\nWhen forming a new AMD PDU, the transmitting side of an AM RLC entity shall:\n- only map the original RLC SDU or RLC SDU segment to the Data field of the new AMD PDU;\n- modify the header of the new AMD PDU in accordance with the description in clause 6.2.2.4;\n- set the P field according to clause 5.3.3."
+  },
+  {
+    "spec_id": "38.322",
+    "clause_id": "5.3.3.2",
+    "title": "Transmission of a AMD PDU",
+    "level": 4,
+    "parent_clause_id": "5.3.3",
+    "children": [],
+    "clause_type": "procedural",
+    "tags": [
+      "implementation_defined",
+      "cross_clause_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 2.5,
+    "rule_signals": [
+      "Clause depends on other clauses/specifications for procedural detail.",
+      "Clause includes implementation-defined / implementation-latitude wording."
+    ],
+    "internal_refs": [
+      "5.2.3.1.1"
+    ],
+    "external_refs": [],
+    "referenced_clauses": [
+      {
+        "clause_id": "5.2.3.1.1",
+        "title": "General",
+        "text": "The transmitting side of an AM RLC entity shall prioritize transmission of RLC control PDUs over AMD PDUs. The\ntransmitting side of an AM RLC entity shall prioritize transmission of AMD PDUs containing previously transmitted\nRLC SDUs or RLC SDU segments over transmission of AMD PDUs containing not previously transmitted RLC SDUs\nor RLC SDU segments.\nThe transmitting side of an AM RLC entity shall maintain a transmitting window according to the state variable\nTX_Next_Ack as follows:\n- a SN falls within the transmitting window if TX_Next_Ack <= SN < TX_Next_Ack + AM_Window_Size;\n- a SN falls outside of the transmitting window otherwise.\nThe transmitting side of an AM RLC entity shall not submit to lower layer any AMD PDU whose SN falls outside of\nthe transmitting window.\nFor each RLC SDU received from the upper layer, the AM RLC entity shall:\n- associate a SN with the RLC SDU equal to TX_Next and construct an AMD PDU by setting the SN of the AMD\nPDU to TX_Next;\n- increment TX_Next by one.\nWhen submitting an AMD PDU that contains a segment of an RLC SDU, to lower layer, the transmitting side of an AM\nRLC entity shall:\n- set the SN of the AMD PDU to the SN of the corresponding RLC SDU. ...[TRUNCATED]"
+      }
+    ],
+    "snippet": "Upon notification of a transmission opportunity by lower layer, for each AMD PDU submitted for transmission such\nthat the AMD PDU contains either a not previously transmitted RLC SDU or an RLC SDU segment containing not\npreviously transmitted byte segment, the transmitting side of an AM RLC entity shall:\n- increment PD ...",
+    "full_text": "Upon notification of a transmission opportunity by lower layer, for each AMD PDU submitted for transmission such\nthat the AMD PDU contains either a not previously transmitted RLC SDU or an RLC SDU segment containing not\npreviously transmitted byte segment, the transmitting side of an AM RLC entity shall:\n- increment PDU_WITHOUT_POLL by one;\n- increment BYTE_WITHOUT_POLL by every new byte of Data field element that it maps to the Data field of\nthe AMD PDU;\n- if PDU_WITHOUT_POLL >= pollPDU; or\n- if BYTE_WITHOUT_POLL >= pollByte:\n- include a poll in the AMD PDU as described below.\nUpon notification of a transmission opportunity by lower layer, for each AMD PDU submitted for transmission, the\ntransmitting side of an AM RLC entity shall:\n- if both the transmission buffer and the retransmission buffer becomes empty (excluding transmitted RLC SDUs\nor RLC SDU segments awaiting acknowledgements and excluding RLC SDUs or RLC SDU segments for which\nthe transmission and retransmission are stopped as specified in clause 5.2.3.1.1) after the transmission of the\nAMD PDU; or\n- if no new RLC SDU can be transmitted after the transmission of the AMD PDU (e.g. due to window stalling); or\n- if an indication is received from upper layer (e.g., PDCP) that the condition for remaining-time-based RLC\npolling has been met for an RLC SDU:\n- include a poll in the AMD PDU as described below.\nNOTE: Empty RLC buffer (excluding transmitted RLC SDUs or RLC SDU segments awaiting\nacknowledgements and excluding RLC SDUs or RLC SDU segments for which the transmission and\nretransmission are stopped as specified in clause 5.2.3.1.1) should not lead to unnecessary polling when\ndata awaits in the upper layer. Details are left up to UE implementation.\nTo include a poll in an AMD PDU, the transmitting side of an AM RLC entity shall:\n- set the P field of the AMD PDU to \"1\";\n- set PDU_WITHOUT_POLL to 0;\n- set BYTE_WITHOUT_POLL to 0.\nUpon submission of an AMD PDU including a poll to lower layer, the transmitting side of an AM RLC entity shall:\n- set POLL_SN to the highest SN of the AMD PDU among the AMD PDUs submitted to lower layer;\n\n- if t-PollRetransmit is not running:\n- start t-PollRetransmit.\n- else:\n- restart t-PollRetransmit."
+  },
+  {
+    "spec_id": "38.322",
+    "clause_id": "5.1.1",
+    "title": "RLC entity establishment",
+    "level": 3,
+    "parent_clause_id": "5.1",
+    "children": [],
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency",
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 2.0,
+    "rule_signals": [
+      "Clause mentions timers/state/configuration concepts that may require explicit definitions.",
+      "Clause depends on other clauses/specifications for procedural detail."
+    ],
+    "internal_refs": [
+      "5.2"
+    ],
+    "external_refs": [],
+    "referenced_clauses": [
+      {
+        "clause_id": "5.2",
+        "title": "Data transfer procedures",
+        "text": ""
+      }
+    ],
+    "snippet": "When upper layers request an RLC entity establishment, the UE shall:\n- establish a RLC entity;\n- set the state variables of the RLC entity to initial values;\n- follow the procedures in clause 5.2.\nFor NR sidelink groupcast and broadcast or SL-SRB4, when receiving the first UMD PDU from a Source Layer 2 ID\nand Destinati ...",
+    "full_text": "When upper layers request an RLC entity establishment, the UE shall:\n- establish a RLC entity;\n- set the state variables of the RLC entity to initial values;\n- follow the procedures in clause 5.2.\nFor NR sidelink groupcast and broadcast or SL-SRB4, when receiving the first UMD PDU from a Source Layer 2 ID\nand Destination Layer 2 ID pair for an LCID, and there is not yet a corresponding receiving RLC entity for a radio\nbearer, the UE shall:\n- establish a receiving RLC entity;\n- set the state variables of the RLC entity to initial values;\n- follow the procedures in clause 5.2.\nNOTE: The receiving RLC entity of SL-SRB0 and SL-SRB1 is established same as NR sidelink groupcast and\nbroadcast."
+  },
+  {
+    "spec_id": "38.322",
+    "clause_id": "4.2.1",
+    "title": "RLC entities",
+    "level": 3,
+    "parent_clause_id": "4.2",
+    "children": [
+      "4.2.1.1",
+      "4.2.1.2",
+      "4.2.1.3"
+    ],
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency",
+      "state_or_timer_dependency",
+      "contains_figure_caption"
+    ],
+    "priority": "medium",
+    "rule_score": 2.0,
+    "rule_signals": [
+      "Clause mentions timers/state/configuration concepts that may require explicit definitions.",
+      "Clause depends on other clauses/specifications for procedural detail."
+    ],
+    "internal_refs": [],
+    "external_refs": [
+      "3GPP TS 38.340",
+      "3GPP TS 38.351"
+    ],
+    "referenced_clauses": [],
+    "snippet": "The description in this clause is a model and does not specify or restrict implementations.\nRRC is generally in control of the RLC configuration.\nFunctions of the RLC sub layer are performed by RLC entities. For an RLC entity configured at the gNB, there is a peer\nRLC entity configured at the UE and vice versa. In NR s ...",
+    "full_text": "The description in this clause is a model and does not specify or restrict implementations.\nRRC is generally in control of the RLC configuration.\nFunctions of the RLC sub layer are performed by RLC entities. For an RLC entity configured at the gNB, there is a peer\nRLC entity configured at the UE and vice versa. In NR sidelink communication, in NR sidelink discovery, for an RLC\nentity configured at the transmitting UE, there is a peer RLC entity configured at each receiving UE.\nAn RLC entity receives/delivers RLC SDUs from/to upper layer or N3C and sends/receives RLC PDUs to/from its peer\nRLC entity via lower layers.\nAn RLC PDU can either be an RLC data PDU or an RLC control PDU. If an RLC entity receives RLC SDUs from\nupper layer, it receives them through a single RLC channel between RLC and upper layer, and after forming RLC data\nPDUs from the received RLC SDUs, the RLC entity submits the RLC data PDUs to lower layer through a single logical\nchannel. If an RLC entity receives RLC data PDUs from lower layer, it receives them through a single logical channel,\nand after forming RLC SDUs from the received RLC data PDUs, the RLC entity delivers the RLC SDUs to upper layer\n\nthrough a single RLC channel between RLC and upper layer. If an RLC entity submits/receives RLC control PDUs\nto/from lower layer, it submits/receives them through the same logical channel it submits/receives the RLC data PDUs\nthrough.\nNOTE 1: In case the upper layer is BAP as defined in TS 38.340 [7], an RLC channel refers to a Backhaul RLC\nchannel.\nNOTE 2: In case the upper layer is SRAP as defined in TS 38.351 [9], an RLC channel refers to either a PC5 Relay\nRLC channel or a Uu Relay RLC channel.\nAn RLC entity can be configured to perform data transfer in one of the following three modes: Transparent Mode (TM),\nUnacknowledged Mode (UM) or Acknowledged Mode (AM). Consequently, an RLC entity is categorized as a TM\nRLC entity, an UM RLC entity or an AM RLC entity depending on the mode of data transfer that the RLC entity is\nconfigured to provide.\nA TM RLC entity is configured either as a transmitting TM RLC entity or a receiving TM RLC entity. The transmitting\nTM RLC entity receives RLC SDUs from upper layer and sends RLC PDUs to its peer receiving TM RLC entity via\nlower layers. The receiving TM RLC entity delivers RLC SDUs to upper layer and receives RLC PDUs from its peer\ntransmitting TM RLC entity via lower layers.\nAn UM RLC entity is configured either as a transmitting UM RLC entity or a receiving UM RLC entity. The\ntransmitting UM RLC entity receives RLC SDUs from upper layer and sends RLC PDUs to its peer receiving UM RLC\nentity via lower layers. The receiving UM RLC entity delivers RLC SDUs to upper layer and receives RLC PDUs from\nits peer transmitting UM RLC entity via lower layers.\nAn AM RLC entity consists of a transmitting side and a receiving side. The transmitting side of an AM RLC entity\nreceives RLC SDUs from upper layer and sends RLC PDUs to its peer AM RLC entity via lower layers. The receiving\nside of an AM RLC entity delivers RLC SDUs to upper layer and receives RLC PDUs from its peer AM RLC entity via\nlower layers.\nFigure 4.2.1-1: Overview model of the RLC sub layer\nRLC SDUs of variable sizes which are byte aligned (i.e. multiple of 8 bits) are supported for all RLC entity types (i.e.\nTM, UM and AM RLC entity).\n\nEach RLC SDU is used to construct an RLC PDU without waiting for notification from the lower layer (i.e., by MAC)\nof a transmission opportunity. In the case of UM and AM RLC entities, an RLC SDU may be segmented and\ntransported using two or more RLC PDUs based on the notification(s) from the lower layer.\nRLC PDUs are submitted to lower layer only when a transmission opportunity has been notified by lower layer (i.e. by\nMAC).\nNOTE 3: The UE should aim to prevent excessive non-consecutive RLC PDUs in a MAC PDU when the UE is\nrequested to generate more than one MAC PDU.\nDescription of different RLC entity types are provided below."
+  },
+  {
+    "spec_id": "38.322",
+    "clause_id": "5.1.3",
+    "title": "RLC entity release",
+    "level": 3,
+    "parent_clause_id": "5.1",
+    "children": [],
+    "clause_type": "procedural",
+    "tags": [
+      "implementation_defined",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 1.75,
+    "rule_signals": [
+      "Clause contains a weak optionality qualifier ('if any').",
+      "Clause includes implementation-defined / implementation-latitude wording."
+    ],
+    "internal_refs": [],
+    "external_refs": [],
+    "referenced_clauses": [],
+    "snippet": "When upper layers request an RLC entity release, the UE shall:\n- discard all RLC SDUs, RLC SDU segments, and RLC PDUs, if any;\n- release the RLC entity.\nNOTE: For groupcast and broadcast of NR sidelink communication or for SL-SRB4, the receiving UM RLC\nentity release is up to UE implementation.",
+    "full_text": "When upper layers request an RLC entity release, the UE shall:\n- discard all RLC SDUs, RLC SDU segments, and RLC PDUs, if any;\n- release the RLC entity.\nNOTE: For groupcast and broadcast of NR sidelink communication or for SL-SRB4, the receiving UM RLC\nentity release is up to UE implementation."
+  },
+  {
+    "spec_id": "38.322",
+    "clause_id": "7.3",
+    "title": "Timers",
+    "level": 2,
+    "parent_clause_id": "7",
+    "children": [],
+    "clause_type": "supporting_semantics",
+    "tags": [
+      "cross_clause_dependency",
+      "state_or_timer_dependency"
+    ],
+    "priority": "low",
+    "rule_score": 1.5,
+    "rule_signals": [
+      "Clause mentions timers/state/configuration concepts that may require explicit definitions.",
+      "Clause depends on other clauses/specifications for procedural detail."
+    ],
+    "internal_refs": [
+      "5.2.2.2",
+      "5.2.3.2",
+      "5.2.3.2.5",
+      "5.3.3",
+      "5.3.4"
+    ],
+    "external_refs": [
+      "3GPP TS 38.331"
+    ],
+    "referenced_clauses": [
+      {
+        "clause_id": "5.2.2.2",
+        "title": "Receive operations",
+        "text": ""
+      },
+      {
+        "clause_id": "5.2.3.2",
+        "title": "Receive operations",
+        "text": ""
+      },
+      {
+        "clause_id": "5.2.3.2.5",
+        "title": "Actions when t-RxDiscard expires",
+        "text": "When t-RxDiscard expires, the receiving side of an AM RLC entity shall:\n- discard the AMD PDU(s) in the reception buffer with SN < RX_Next_Discard_Trigger, if any;\n- update RX_Next to the SN of the first RLC SDU with SN >= RX_Next_Discard_Trigger for which not all bytes\nhave been received;\n- if RX_Next_Highest > RX_Next +1; or\n\n- if RX_Next_Highest = RX_Next + 1 and there is at least one missing byte segment of the SDU associated with\nSN = RX_Next before the last byte of all received segments of this SDU:\n- start t-RxDiscard;\n- set RX_Next_Discard_Trigger to RX_Next_Highest."
+      }
+    ],
+    "snippet": "The following timers are configured by TS 38.331 [5]:\na) t-PollRetransmit\nThis timer is used by the transmitting side of an AM RLC entity in order to retransmit a poll (see clause 5.3.3).\nb) t-Reassembly\nThis timer is used by the receiving side of an AM RLC entity and receiving UM RLC entity in order to detect loss of ...",
+    "full_text": "The following timers are configured by TS 38.331 [5]:\na) t-PollRetransmit\nThis timer is used by the transmitting side of an AM RLC entity in order to retransmit a poll (see clause 5.3.3).\nb) t-Reassembly\nThis timer is used by the receiving side of an AM RLC entity and receiving UM RLC entity in order to detect loss of\nRLC PDUs at lower layer (see clauses 5.2.2.2 and 5.2.3.2). If t-Reassembly is running, t-Reassembly shall not be started\nadditionally, i.e. only one t-Reassembly per RLC entity is running at a given time.\nc) t-StatusProhibit\nThis timer is used by the receiving side of an AM RLC entity in order to prohibit transmission of a STATUS PDU (see\nclause 5.3.4).\nd) t-RxDiscard\nThis timer is used by the receiving side of an AM RLC entity in order to detect discard of AMD PDU(s) (see clause\n5.2.3.2.5). If t-RxDiscard is running, t-RxDiscard shall not be started additionally, i.e. only one t-RxDiscard per RLC\nentity is running at a given time."
+  },
+  {
+    "spec_id": "38.322",
+    "clause_id": "7.4",
+    "title": "Configurable parameters",
+    "level": 2,
+    "parent_clause_id": "7",
+    "children": [],
+    "clause_type": "supporting_semantics",
+    "tags": [
+      "cross_clause_dependency",
+      "state_or_timer_dependency"
+    ],
+    "priority": "low",
+    "rule_score": 1.5,
+    "rule_signals": [
+      "Clause mentions timers/state/configuration concepts that may require explicit definitions.",
+      "Clause depends on other clauses/specifications for procedural detail."
+    ],
+    "internal_refs": [
+      "5.2.3",
+      "5.3.2",
+      "5.3.3"
+    ],
+    "external_refs": [
+      "3GPP TS 38.322",
+      "3GPP TS 38.331"
+    ],
+    "referenced_clauses": [
+      {
+        "clause_id": "5.2.3",
+        "title": "AM data transfer",
+        "text": ""
+      },
+      {
+        "clause_id": "5.3.2",
+        "title": "Retransmission",
+        "text": "The transmitting side of an AM RLC entity can receive a negative acknowledgement (notification of reception failure\nby its peer AM RLC entity) for an RLC SDU or an RLC SDU segment by the following:\n- STATUS PDU from its peer AM RLC entity.\nWhen receiving a negative acknowledgement for an RLC SDU or an RLC SDU segment by a STATUS PDU from its\npeer AM RLC entity, the transmitting side of the AM RLC entity shall:\n- if the SN of the corresponding RLC SDU falls within the range TX_Next_Ack <= SN < = the highest SN of the\nAMD PDU among the AMD PDUs submitted to lower layer; and\n- if stopReTxDiscardedSDU is configured and no discard indication for the RLC SDU has been received from\nupper layer, or if stopReTxDiscardedSDU is not configured:\n- consider the RLC SDU or the RLC SDU segment for which a negative acknowledgement was received for\nretransmission.\nWhen receiving an indication from upper layer (e.g., PDCP) that the condition for remaining-time-based RLC\nretransmission has been met for an RLC SDU, the transmitting side of the AM RLC entity shall:\n- if the RLC SDU or the RLC SDU segment(s) thereof has been submitted to lower layers but has not been\npositively acknowledged:\n- consider t ...[TRUNCATED]"
+      },
+      {
+        "clause_id": "5.3.3",
+        "title": "Polling",
+        "text": ""
+      }
+    ],
+    "snippet": "The following parameters are configured by TS 38.331 [5]:\na) maxRetxThreshold\nThis parameter is used by the transmitting side of each AM RLC entity to limit the number of retransmissions\ncorresponding to an RLC SDU, including its segments (see clause 5.3.2).\nb) pollPDU\nThis parameter is used by the transmitting side of ...",
+    "full_text": "The following parameters are configured by TS 38.331 [5]:\na) maxRetxThreshold\nThis parameter is used by the transmitting side of each AM RLC entity to limit the number of retransmissions\ncorresponding to an RLC SDU, including its segments (see clause 5.3.2).\nb) pollPDU\nThis parameter is used by the transmitting side of each AM RLC entity to trigger a poll for every pollPDU PDUs (see\nclause 5.3.3).\nc) pollByte\n\nThis parameter is used by the transmitting side of each AM RLC entity to trigger a poll for every pollByte bytes (see\nclause 5.3.3).\nd) stopReTxDiscardedSDU\nThis parameter is used by the transmitting side of each AM RLC entity to determine whether to stop RLC transmission\nand retransmission of discarded SDUs (see clause 5.2.3).\n\nAnnex A (informative):\nChange history\nChange history\nDate Meeting TDoc CR Rev Cat Subject/Comment New\nversion\n2017-04 RAN2#97\nbis\nR2-1703648 Skeleton of NR RLC specification x.y.z\n2017-05 RAN2#98 R2-1705513 Initial draft TS capturing outcome of email discussion [97bis#25] 0.0.2\n2017-06 RAN#98 R2-1707257 Draft TS capturing outcome of email discussion [98#36] 0.1.0\n2017-07 RAN2 NR\nAH#2\nR2-1707508 Draft TS capturing outcome of email discussion [NR-AH2#06] 0.2.0\n2017-08 RAN2#99 R2-1709752 Draft TS capturing outcome of email discussion [99#11] 0.3.0\n2017-09 RAN#77 RP-171883 Submitted to RAN for information 1.0.0\n2017-10 RAN2#99\nbis\nR2-1712478 Draft TS capturing outcome of email discussion [99bis#13] 1.1.0\n2017-12 RAN2#10\n0\nR2-1714261 Draft TS capturing outcome of email discussion [100#21] 1.2.0\n2017-12 RP-78 RP-172322 Submitted to RAN for approval 2.0.0\n2017-12 RP-78 Upgraded to Rel-15 15.0.0\n2018-03 RP-79 RP-180440 0003 - F Corrections for RLC specification 15.1.0\n2018-06 RP-80 RP-181214 0009 1 F CR on updating POLL_SN value and selecting the RLC SDU for\nretransmission\n15.2.0\n2018-09 RP-81 RP-181939 0018 1 F Remaining corrections on TS 38.322 15.3.0\n2018-12 RP-82 RP-182658 0028 1 F Ambiguity of POLL_SN update timing 15.4.0\n2019-03 RP-83 RP-190540 0029 1 D Corrections on RLC state variables 15.5.0\n2020-03 RP-87 RP-200346 0030 1 B CR for 38.322 for NR V2X 16.0.0\n2020-07 RP-88 RP-201179 0036 1 F Correction on RLC spec to support the BAP as upper layer 16.1.0\n2020-12 RP-90 RP-202772 0037 1 F CR to 38.322 on Backhaul RLC Channel 16.2.0\n2022-03 RP-95 RP-220484 0045 1 B Introduction of NR MBS into 38.322 17.0.0\nRP-95 RP-220491 0046 1 B Introduction of SL Relay in 38.322 17.0.0\n2022-06 RP-96 RP-221732 0048 1 F Correction on RLC for SL relay 17.1.0\nRP-96 RP-221712 0049 - A Corrections on the receiving RLC entity establishment for SLSRB0/SL-SRB1\n17.1.0\n2022-12 RP-98 RP-223412 0050 4 F RLC correction for SL relay 17.2.0\n2023-06 RP-100 RP-231416 0052 1 F Clarification on the maximum Data field size for L2 U2N relay 17.3.0\n2023-12 RP-102 RP-233908 0053 1 B Introduction of XR Enhancements 18.0.0\nRP-102 RP-233904 0054 3 B Introduction of NR sidelink relay enhancements 18.0.0\n2024-06 RP-104 RP-241574 0056 - B Clarification on RETX_COUNT during an LTM cell switch 18.1.0\n2024-12 RP-106 RP-243232 0063 1 F RLC correction for multi-path relay with N3C 18.2.0\n2025-09 RP-109 RP-252779 0065 1 B Introduction of R19 XR enhancements for RLC spec. 19.0.0\n\nHistory\nDocument history\nV19.0.0 October 2025 Publication"
+  },
+  {
+    "spec_id": "38.322",
+    "clause_id": "5.1.2",
+    "title": "RLC entity re-establishment",
+    "level": 3,
+    "parent_clause_id": "5.1",
+    "children": [],
+    "clause_type": "procedural",
+    "tags": [
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 1.25,
+    "rule_signals": [
+      "Clause mentions timers/state/configuration concepts that may require explicit definitions.",
+      "Clause contains a weak optionality qualifier ('if any')."
+    ],
+    "internal_refs": [],
+    "external_refs": [],
+    "referenced_clauses": [],
+    "snippet": "When upper layers request an RLC entity re-establishment, the UE shall:\n- discard all RLC SDUs, RLC SDU segments, and RLC PDUs, if any;\n- stop and reset all timers;\n- reset all state variables to their initial values.",
+    "full_text": "When upper layers request an RLC entity re-establishment, the UE shall:\n- discard all RLC SDUs, RLC SDU segments, and RLC PDUs, if any;\n- stop and reset all timers;\n- reset all state variables to their initial values."
+  },
+  {
+    "spec_id": "38.322",
+    "clause_id": "5.3.3.4",
+    "title": "Expiry of t-PollRetransmit",
+    "level": 4,
+    "parent_clause_id": "5.3.3",
+    "children": [],
+    "clause_type": "procedural",
+    "tags": [
+      "cross_clause_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 1.25,
+    "rule_signals": [
+      "Clause depends on other clauses/specifications for procedural detail.",
+      "Clause contains a weak optionality qualifier ('if any')."
+    ],
+    "internal_refs": [
+      "5.2.3.1.1",
+      "5.3.3.2"
+    ],
+    "external_refs": [],
+    "referenced_clauses": [
+      {
+        "clause_id": "5.2.3.1.1",
+        "title": "General",
+        "text": "The transmitting side of an AM RLC entity shall prioritize transmission of RLC control PDUs over AMD PDUs. The\ntransmitting side of an AM RLC entity shall prioritize transmission of AMD PDUs containing previously transmitted\nRLC SDUs or RLC SDU segments over transmission of AMD PDUs containing not previously transmitted RLC SDUs\nor RLC SDU segments.\nThe transmitting side of an AM RLC entity shall maintain a transmitting window according to the state variable\nTX_Next_Ack as follows:\n- a SN falls within the transmitting window if TX_Next_Ack <= SN < TX_Next_Ack + AM_Window_Size;\n- a SN falls outside of the transmitting window otherwise.\nThe transmitting side of an AM RLC entity shall not submit to lower layer any AMD PDU whose SN falls outside of\nthe transmitting window.\nFor each RLC SDU received from the upper layer, the AM RLC entity shall:\n- associate a SN with the RLC SDU equal to TX_Next and construct an AMD PDU by setting the SN of the AMD\nPDU to TX_Next;\n- increment TX_Next by one.\nWhen submitting an AMD PDU that contains a segment of an RLC SDU, to lower layer, the transmitting side of an AM\nRLC entity shall:\n- set the SN of the AMD PDU to the SN of the corresponding RLC SDU. ...[TRUNCATED]"
+      },
+      {
+        "clause_id": "5.3.3.2",
+        "title": "Transmission of a AMD PDU",
+        "text": "Upon notification of a transmission opportunity by lower layer, for each AMD PDU submitted for transmission such\nthat the AMD PDU contains either a not previously transmitted RLC SDU or an RLC SDU segment containing not\npreviously transmitted byte segment, the transmitting side of an AM RLC entity shall:\n- increment PDU_WITHOUT_POLL by one;\n- increment BYTE_WITHOUT_POLL by every new byte of Data field element that it maps to the Data field of\nthe AMD PDU;\n- if PDU_WITHOUT_POLL >= pollPDU; or\n- if BYTE_WITHOUT_POLL >= pollByte:\n- include a poll in the AMD PDU as described below.\nUpon notification of a transmission opportunity by lower layer, for each AMD PDU submitted for transmission, the\ntransmitting side of an AM RLC entity shall:\n- if both the transmission buffer and the retransmission buffer becomes empty (excluding transmitted RLC SDUs\nor RLC SDU segments awaiting acknowledgements and excluding RLC SDUs or RLC SDU segments for which\nthe transmission and retransmission are stopped as specified in clause 5.2.3.1.1) after the transmission of the\nAMD PDU; or\n- if no new RLC SDU can be transmitted after the transmission of the AMD PDU (e.g. due to window stalling); or\n- if an indic ...[TRUNCATED]"
+      }
+    ],
+    "snippet": "Upon expiry of t-PollRetransmit, the transmitting side of an AM RLC entity shall:\n- if both the transmission buffer and the retransmission buffer are empty (excluding transmitted RLC SDU or RLC\nSDU segment awaiting acknowledgements and excluding RLC SDUs or RLC SDU segments for which the\ntransmission and retransmission ...",
+    "full_text": "Upon expiry of t-PollRetransmit, the transmitting side of an AM RLC entity shall:\n- if both the transmission buffer and the retransmission buffer are empty (excluding transmitted RLC SDU or RLC\nSDU segment awaiting acknowledgements and excluding RLC SDUs or RLC SDU segments for which the\ntransmission and retransmission are stopped as specified in clause 5.2.3.1.1); or\n- if no new RLC SDU or RLC SDU segment can be transmitted (e.g. due to window stalling):\n- consider the RLC SDU with the highest SN among the RLC SDUs submitted to lower layer for\nretransmission (excluding RLC SDUs or RLC SDU segments for which the transmission and retransmission\nare stopped as specified in clause 5.2.3.1.1); or\n- consider any RLC SDU which has not been positively acknowledged for retransmission (excluding RLC\nSDUs or RLC SDU segments for which the transmission and retransmission are stopped as specified in\nclause 5.2.3.1.1).\n- include a poll in an AMD PDU, if any, as described in clause 5.3.3.2."
+  },
+  {
+    "spec_id": "38.322",
+    "clause_id": "5.2.2.2.3",
+    "title": "Actions when an UMD PDU is placed in the reception buffer",
+    "level": 5,
+    "parent_clause_id": "5.2.2.2",
+    "children": [],
+    "clause_type": "procedural",
+    "tags": [
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 1.0,
+    "rule_signals": [
+      "Clause mentions timers/state/configuration concepts that may require explicit definitions."
+    ],
+    "internal_refs": [],
+    "external_refs": [],
+    "referenced_clauses": [],
+    "snippet": "When an UMD PDU with SN = x is placed in the reception buffer, the receiving UM RLC entity shall:\n- if all byte segments with SN = x are received:\n- reassemble the RLC SDU from all byte segments with SN = x, remove RLC headers and deliver the\nreassembled RLC SDU to upper layer;\n- if x = RX_Next_Reassembly:\n- update RX_ ...",
+    "full_text": "When an UMD PDU with SN = x is placed in the reception buffer, the receiving UM RLC entity shall:\n- if all byte segments with SN = x are received:\n- reassemble the RLC SDU from all byte segments with SN = x, remove RLC headers and deliver the\nreassembled RLC SDU to upper layer;\n- if x = RX_Next_Reassembly:\n- update RX_Next_Reassembly to the SN of the first SN > current RX_Next_Reassembly that has not been\nreassembled and delivered to upper layer.\n- else if x falls outside of the reassembly window:\n- update RX_Next_Highest to x + 1;\n- discard any UMD PDUs with SN that falls outside of the reassembly window;\n- if RX_Next_Reassembly falls outside of the reassembly window:\n- set RX_Next_Reassembly to the SN of the first SN >= (RX_Next_Highest - UM_Window_Size) that has\nnot been reassembled and delivered to upper layer.\n- if t-Reassembly is running:\n- if RX_Timer_Trigger <= RX_Next_Reassembly; or\n- if RX_Timer_Trigger falls outside of the reassembly window and RX_Timer_Trigger is not equal to\nRX_Next_Highest; or\n- if RX_Next_Highest = RX_Next_Reassembly + 1 and there is no missing byte segment of the RLC SDU\nassociated with SN = RX_Next_Reassembly before the last byte of all received segments of this RLC SDU:\n- stop and reset t-Reassembly .\n- if t-Reassembly is not running (includes the case when t-Reassembly is stopped due to actions above):\n- if RX_Next_Highest > RX_Next_Reassembly + 1; or\n- if RX_Next_Highest = RX_Next_Reassembly + 1 and there is at least one missing byte segment of the RLC\nSDU associated with SN = RX_Next_Reassembly before the last byte of all received segments of this RLC\nSDU:\n- start t-Reassembly;\n- set RX_Timer_Trigger to RX_Next_Highest."
+  },
+  {
+    "spec_id": "38.322",
+    "clause_id": "5.2.2.2.4",
+    "title": "Actions when t-Reassembly expires",
+    "level": 5,
+    "parent_clause_id": "5.2.2.2",
+    "children": [],
+    "clause_type": "procedural",
+    "tags": [
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 1.0,
+    "rule_signals": [
+      "Clause mentions timers/state/configuration concepts that may require explicit definitions."
+    ],
+    "internal_refs": [],
+    "external_refs": [],
+    "referenced_clauses": [],
+    "snippet": "When t-Reassembly expires, the receiving UM RLC entity shall:\n- update RX_Next_Reassembly to the SN of the first SN >= RX_Timer_Trigger that has not been reassembled;\n- discard all segments with SN < updated RX_Next_Reassembly;\n- if RX_Next_Highest > RX_Next_Reassembly + 1; or\n- if RX_Next_Highest = RX_Next_Reassembly ...",
+    "full_text": "When t-Reassembly expires, the receiving UM RLC entity shall:\n- update RX_Next_Reassembly to the SN of the first SN >= RX_Timer_Trigger that has not been reassembled;\n- discard all segments with SN < updated RX_Next_Reassembly;\n- if RX_Next_Highest > RX_Next_Reassembly + 1; or\n- if RX_Next_Highest = RX_Next_Reassembly + 1 and there is at least one missing byte segment of the RLC\nSDU associated with SN = RX_Next_Reassembly before the last byte of all received segments of this RLC\nSDU:\n- start t-Reassembly;\n- set RX_Timer_Trigger to RX_Next_Highest."
+  },
+  {
+    "spec_id": "38.322",
+    "clause_id": "5.2.3.1.1",
+    "title": "General",
+    "level": 5,
+    "parent_clause_id": "5.2.3.1",
+    "children": [],
+    "clause_type": "procedural",
+    "tags": [
+      "state_or_timer_dependency",
+      "has_bullets"
+    ],
+    "priority": "high",
+    "rule_score": 1.0,
+    "rule_signals": [
+      "Clause mentions timers/state/configuration concepts that may require explicit definitions."
+    ],
+    "internal_refs": [],
+    "external_refs": [
+      "3GPP TS 38.323"
+    ],
+    "referenced_clauses": [],
+    "snippet": "The transmitting side of an AM RLC entity shall prioritize transmission of RLC control PDUs over AMD PDUs. The\ntransmitting side of an AM RLC entity shall prioritize transmission of AMD PDUs containing previously transmitted\nRLC SDUs or RLC SDU segments over transmission of AMD PDUs containing not previously transmitte ...",
+    "full_text": "The transmitting side of an AM RLC entity shall prioritize transmission of RLC control PDUs over AMD PDUs. The\ntransmitting side of an AM RLC entity shall prioritize transmission of AMD PDUs containing previously transmitted\nRLC SDUs or RLC SDU segments over transmission of AMD PDUs containing not previously transmitted RLC SDUs\nor RLC SDU segments.\nThe transmitting side of an AM RLC entity shall maintain a transmitting window according to the state variable\nTX_Next_Ack as follows:\n- a SN falls within the transmitting window if TX_Next_Ack <= SN < TX_Next_Ack + AM_Window_Size;\n- a SN falls outside of the transmitting window otherwise.\nThe transmitting side of an AM RLC entity shall not submit to lower layer any AMD PDU whose SN falls outside of\nthe transmitting window.\nFor each RLC SDU received from the upper layer, the AM RLC entity shall:\n- associate a SN with the RLC SDU equal to TX_Next and construct an AMD PDU by setting the SN of the AMD\nPDU to TX_Next;\n- increment TX_Next by one.\nWhen submitting an AMD PDU that contains a segment of an RLC SDU, to lower layer, the transmitting side of an AM\nRLC entity shall:\n- set the SN of the AMD PDU to the SN of the corresponding RLC SDU.\nThe transmitting side of an AM RLC entity can receive a positive acknowledgement (confirmation of successful\nreception by its peer AM RLC entity) for an RLC SDU by the following:\n- STATUS PDU from its peer AM RLC entity.\nWhen receiving a positive acknowledgement for an RLC SDU with SN = x, the transmitting side of an AM RLC entity\nshall:\n- send an indication to the upper layers of successful delivery of the RLC SDU;\n- set TX_Next_Ack equal to the SN of the RLC SDU with the smallest SN, whose SN falls within the range\nTX_Next_Ack <= SN <= TX_Next and for which a positive acknowledgment has not been received yet.\nIf stopReTxDiscardedSDU is configured, when indicated from upper layer to discard a particular RLC SDU (see TS\n38.323 [4]), the transmitting side of an AM RLC entity shall not consider the corresponding RLC SDU or RLC SDU\nsegment(s) for transmission or retransmission if the RLC SDU or the RLC SDU segment(s) thereof has been submitted\nto lower layers.\nNOTE: The corresponding RLC SDU or RLC SDU segment(s) above includes RLC SDU or RLC SDU\nsegment(s) which have been already considered or pending for transmission or retransmission."
+  }
+]
